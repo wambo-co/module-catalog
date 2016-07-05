@@ -20,6 +20,7 @@
     }
   },
   "require": {
-    "phpunit/phpunit": "^5.4"
+    "phpunit/phpunit": "^5.4",
+    "league/flysystem": "^1.0"
   }
 }
