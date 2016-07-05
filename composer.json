@@ -1,0 +1,23 @@
+{
+  "name": "wambo/module-catalog",
+  "description": "A product catalog for Wambo",
+  "type": "wambo-module",
+  "authors": [
+    {
+      "name": "Rene Penner",
+      "email": "rene@penner.name",
+      "role": "Developer"
+    },
+    {
+      "name": "Andy Koch",
+      "email": "andy@ak7.io",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Wambo\\Test\\": "src"
+    }
+  },
+  "require": { }
+}
