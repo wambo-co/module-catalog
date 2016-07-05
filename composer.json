@@ -19,5 +19,7 @@
       "Wambo\\Catalog\\": "src"
     }
   },
-  "require": { }
+  "require": {
+    "phpunit/phpunit": "^5.4"
+  }
 }
