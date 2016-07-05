@@ -21,6 +21,7 @@
   },
   "require": {
     "phpunit/phpunit": "^5.4",
-    "league/flysystem": "^1.0"
+    "league/flysystem": "^1.0",
+    "league/flysystem-memory": "^1.0"
   }
 }
