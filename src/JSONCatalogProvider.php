@@ -37,23 +37,9 @@ class JSONCatalogProvider
      *
      * @param CatalogMapper       $catalogMapper   A catalog mapper for converting unstructured catalog data into
      *                                             Catalog models
-     *
-     * @throws \InvalidArgumentException If one of the given arguments is invalid or missing
      */
     public function __construct(FilesystemInterface $filesystem, string $catalogFilePath, CatalogMapper $catalogMapper)
     {
-        if (is_null($filesystem)) {
-            throw new \InvalidArgumentException("No filesystem supplied");
-        }
-
-        if (empty($catalogFilePath)) {
-            throw new \InvalidArgumentException("No path to a catalog file supplied");
-        }
-
-        if (is_null($catalogMapper)) {
-            throw new \InvalidArgumentException("No catalog mapper given");
-        }
-
         $this->filesystem = $filesystem;
         $this->catalogFilePath = $catalogFilePath;
         $this->catalogMapper = $catalogMapper;

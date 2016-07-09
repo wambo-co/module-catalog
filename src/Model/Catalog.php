@@ -7,7 +7,7 @@ namespace Wambo\Catalog\Model;
  *
  * @package Wambo\Catalog\Model
  */
-class Catalog
+class Catalog implements \Countable
 {
     /**
      * @var array
@@ -32,5 +32,17 @@ class Catalog
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * Get the number of products in this catalog
+     *
+     * @see \Countable
+     *
+     * @return integer
+     */
+    public function count()
+    {
+        return count($this->products);
     }
 }
