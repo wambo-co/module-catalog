@@ -2,6 +2,7 @@
   "name": "wambo/module-catalog",
   "description": "A product catalog for Wambo",
   "type": "wambo-module",
+  "license": "Apache-2.0",
   "authors": [
     {
       "name": "Rene Penner",
