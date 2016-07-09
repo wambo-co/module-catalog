@@ -94,6 +94,10 @@ class SlugValidatorTest extends PHPUnit_Framework_TestCase
             ["abc,dfg"],
             ["abc+dfg"],
             ["ABC_xyz"],
+            ['Åre'], // Swedish umlaut
+            ['Öresund'], // German umlaut
+            ['наушник'], // Russian
+            ['이어폰'], // Korean
         ];
     }
 
@@ -120,10 +124,6 @@ class SlugValidatorTest extends PHPUnit_Framework_TestCase
             ['product(1)', "invalid characters"],
             ['product§1', "invalid characters"],
             ['👃-spray', "invalid characters"], // nose emoji
-            ['Åre', "invalid characters"], // Swedish umlaut
-            ['Öresund', "invalid characters"], // German umlaut
-            ['наушник', "invalid characters"], // Russian
-            ['이어폰', "invalid characters"], // Korean
 
             // minimum length
             ["a", "too short"],

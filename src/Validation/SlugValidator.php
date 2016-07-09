@@ -18,7 +18,7 @@ class SlugValidator
     /**
      * @var string $invalidCharactersPattern A regular expression that matches all characters that are invalid for a Slug
      */
-    private $invalidCharactersPattern = '/[^a-zA-Z0-9-_:.,+]/';
+    private $invalidCharactersPattern = '/[^\p{L}\w-_:.,+]/u';
 
     /**
      * @var int $minLength Defines the minimum length for a Slug
