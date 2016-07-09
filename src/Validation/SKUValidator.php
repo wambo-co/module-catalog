@@ -26,6 +26,18 @@ class SKUValidator
     private $uppercaseCharactersPattern = '/[A-Z]/';
 
     /**
+     * @var string $invalidPrefixCharacters A regular expression that matches characters that cannot be used as a prefix
+     *      for SKUs
+     */
+    private $invalidPrefixCharacters = '/^[-]/';
+
+    /**
+     * @var string $invalidSuffixCharacters A regular expression that matches characters that cannot be used as a prefix
+     *      for SKUs
+     */
+    private $invalidSuffixCharacters = '/[-]$/';
+
+    /**
      * @var int $minLength Defines the minimum length for a SKU
      */
     private $minLength = 2;
@@ -74,6 +86,20 @@ class SKUValidator
         if ($containsInvalidCharacters) {
             throw new SKUException(sprintf("The SKU \"%s\" contains invalid characters. A SKU can only contain the following characters: a-z, 0-9 and -",
                 $sku));
+        }
+
+        // check prefix
+        $prefixMatches = [];
+        $prefixContainsInvalidCharacters = preg_match($this->invalidPrefixCharacters, $sku, $prefixMatches) == 1;
+        if ($prefixContainsInvalidCharacters) {
+            throw new SKUException(sprintf("A SKU cannot start with the given characters: \"%s\"", implode("", $prefixMatches)));
+        }
+
+        // check suffix
+        $suffixMatches = [];
+        $suffixContainsInvalidCharacters = preg_match($this->invalidSuffixCharacters, $sku, $suffixMatches) == 1;
+        if ($suffixContainsInvalidCharacters) {
+            throw new SKUException(sprintf("A SKU cannot end with the given characters: \"%s\"", implode("", $suffixMatches)));
         }
 
         // check minimum length

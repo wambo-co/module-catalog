@@ -1,29 +1,29 @@
 <?php
-use Wambo\Catalog\Validation\SKUValidator;
+use Wambo\Catalog\Validation\SlugValidator;
 
 /**
- * Class SKUValidatorTest contains tests for the Wambo\Catalog\Validation\SKUValidator class.
+ * Class SlugValidatorTest tests the Wambo\Catalog\Validation\SlugValidator class.
  */
-class SKUValidatorTest extends PHPUnit_Framework_TestCase
+class SlugValidatorTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * If the given SKU is valid validateSKU should not throw an exception
+     * If the given Slug is valid validateSlug should not throw an exception
      *
      * @test
-     * @dataProvider getValidSKUs
+     * @dataProvider getValidSlugs
      *
-     * @param string $sku A SKU
+     * @param string $sku A Slug
      */
-    public function validateSKU_validSKUs_NoExceptionIsThrown($sku)
+    public function validateSlug_validSlugs_NoExceptionIsThrown($sku)
     {
         // arrange
-        $skuValidator = new SKUValidator();
+        $skuValidator = new SlugValidator();
 
         // act
         $exceptionThrown = false;
         try {
 
-            $skuValidator->validateSKU($sku);
+            $skuValidator->validateSlug($sku);
             $exceptionThrown = false;
 
         } catch (Exception $validationException) {
@@ -31,28 +31,28 @@ class SKUValidatorTest extends PHPUnit_Framework_TestCase
         }
 
         // assert
-        $this->assertFalse($exceptionThrown, "validateSKU('$sku') should not have thrown an exception");
+        $this->assertFalse($exceptionThrown, "validateSlug('$sku') should not have thrown an exception");
     }
 
     /**
-     * If the given SKU is invalid validateSKU should throw an exception
+     * If the given Slug is invalid validateSlug should throw an exception
      *
      * @test
-     * @dataProvider getInvalidSKUs
+     * @dataProvider getInvalidSlugs
      *
-     * @param string $sku                      A SKU
+     * @param string $sku                      A Slug
      * @param string $expectedExceptionMessage The expected exception message
      */
-    public function validateSKU_invalidSKUs_ExceptionIsThrown($sku, $expectedExceptionMessage)
+    public function validateSlug_invalidSlugs_ExceptionIsThrown($sku, $expectedExceptionMessage)
     {
         // arrange
-        $skuValidator = new SKUValidator();
+        $skuValidator = new SlugValidator();
 
         // act
         $exceptionThrown = false;
         try {
 
-            $skuValidator->validateSKU($sku);
+            $skuValidator->validateSlug($sku);
             $exceptionThrown = false;
 
         } catch (Exception $validationException) {
@@ -60,23 +60,23 @@ class SKUValidatorTest extends PHPUnit_Framework_TestCase
             // assert
             $exceptionThrown = true;
             $this->assertContains($expectedExceptionMessage, $validationException->getMessage(),
-                "validateSKU('$sku') should have thrown an exception with the message: $expectedExceptionMessage");
+                "validateSlug('$sku') should have thrown an exception with the message: $expectedExceptionMessage");
 
         }
 
         // assert
-        $this->assertTrue($exceptionThrown, "validateSKU('$sku') should have thrown an exception");
+        $this->assertTrue($exceptionThrown, "validateSlug('$sku') should have thrown an exception");
     }
 
     /**
-     * Get a list of valid SKUs
+     * Get a list of valid Slugs
      *
      * @return array
      */
-    public static function getValidSKUs()
+    public static function getValidSlugs()
     {
         return [
-            ["abcdefghijklmnopqrstuvwxyz012345"], // max length <= 32
+            ["abcdefghijklmnopqrstuvwxyz012345abcdefghijklmnopqrstuvwxyz012345"], // max length <= 32
             ["abcdefghijklmnopqrstuvwxyz"], // the whole alphabet
             ["123456789"], // only digits
             ["00000111111111"], // leading zeros
@@ -87,15 +87,22 @@ class SKUValidatorTest extends PHPUnit_Framework_TestCase
             ["product-112345678"],
             ["ab"], // min length >= 2
             ["12"], // min length >= 2
+            ["abc-dfg"],
+            ["abc_dfg"],
+            ["abc:dfg"],
+            ["abc.dfg"],
+            ["abc,dfg"],
+            ["abc+dfg"],
+            ["ABC_xyz"],
         ];
     }
 
     /**
-     * Get a list of invalid SKUs
+     * Get a list of invalid Slugs
      *
      * @return array
      */
-    public static function getInvalidSKUs()
+    public static function getInvalidSlugs()
     {
         // format: [ "sku", "expected exception messages" ]
         return [
@@ -110,11 +117,6 @@ class SKUValidatorTest extends PHPUnit_Framework_TestCase
 
             // invalid characters
             ['7$tshirt', "invalid characters"], // Dollar sign
-            ['gâteau', "invalid characters"], // French umlaut
-            ['käse', "invalid characters"], // German umlaut
-            ['product/1', "invalid characters"],
-            ['product:1', "invalid characters"],
-            ['product.1', "invalid characters"],
             ['product(1)', "invalid characters"],
             ['product§1', "invalid characters"],
             ['👃-spray', "invalid characters"], // nose emoji
@@ -123,28 +125,13 @@ class SKUValidatorTest extends PHPUnit_Framework_TestCase
             ['наушник', "invalid characters"], // Russian
             ['이어폰', "invalid characters"], // Korean
 
-            // invalid prefix
-            ['-product', "cannot start"],
-
-
-            // invalid postfix
-            ['product-', "cannot end"],
-
-            // uppercase characters
-            ["Product-123", "uppercase"],
-            ["pro-Duct-123", "uppercase"],
-            ["AAA", "uppercase"],
-            ["aBc", "uppercase"],
-            ["abC", "uppercase"],
-            ["abC", "uppercase"],
-
             // minimum length
             ["a", "too short"],
             ["1", "too short"],
             ["0", "too short"],
 
             // maximum length
-            ["abcdefghijklmnopqrstuvwxyz0123456789", "too long"],
+            ["abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz0123456789", "too long"],
 
         ];
     }
