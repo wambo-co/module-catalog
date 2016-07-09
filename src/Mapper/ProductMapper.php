@@ -3,7 +3,8 @@ namespace Wambo\Catalog\Mapper;
 
 use Wambo\Catalog\Error\ProductException;
 use Wambo\Catalog\Model\Product;
-use Wambo\Catalog\Service\SKUValidator;
+use Wambo\Catalog\Validation\SKUValidator;
+use Wambo\Catalog\Validation\SlugValidator;
 
 /**
  * Class ProductMapper creates \Wambo\Model\Product models from data bags with product data.
@@ -26,15 +27,21 @@ class ProductMapper
      * @var SKUValidator
      */
     private $SKUValidator;
+    /**
+     * @var SlugValidator
+     */
+    private $slugValidator;
 
     /**
      * Creates a new ProductMapper instance
      *
-     * @param SKUValidator $SKUValidator A class for validating SKUs
+     * @param SKUValidator  $SKUValidator A class for validating SKUs
+     * @param SlugValidator $slugValidator A class for validating slugs
      */
-    public function __construct(SKUValidator $SKUValidator)
+    public function __construct(SKUValidator $SKUValidator, SlugValidator $slugValidator)
     {
         $this->SKUValidator = $SKUValidator;
+        $this->slugValidator = $slugValidator;
     }
 
     /**
@@ -44,16 +51,10 @@ class ProductMapper
      *
      * @return Product
      *
-     * @throws \InvalidArgumentException If the given $productData is not an array
      * @throws ProductException If the no Product could be created from the given product data
      */
-    public function getProduct($productData)
+    public function getProduct(array $productData)
     {
-        // check the input type
-        if (!is_array($productData)) {
-            throw new \InvalidArgumentException("The product data must be given as an array");
-        }
-
         // check if all mandatory fields are present
         foreach ($this->mandatoryFields as $mandatoryField) {
             if (!array_key_exists($mandatoryField, $productData)) {
@@ -64,10 +65,14 @@ class ProductMapper
         // try to create a product from the available data
         try {
 
+            // sku
             $sku = $productData[self::FIELD_SKU];
             $this->SKUValidator->validateSKU($sku);
 
+            // slug
             $slug = $productData[self::FIELD_SLUG];
+            $this->slugValidator->validateSlug($slug);
+
             $title = $productData[self::FIELD_TITLE];
             $summary = $productData[self::FIELD_SUMMARY];
 
