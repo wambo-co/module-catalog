@@ -52,16 +52,16 @@ class Product
      */
     public function __construct(string $sku, string $slug, string $title, string $summary)
     {
-        if (empty($sku)) {
-            throw new \InvalidArgumentException("The sku cannot be null or empty");
+        if (strlen($sku) == 0) {
+            throw new \InvalidArgumentException("The sku cannot be empty");
         }
 
-        if (empty($slug)) {
-            throw new \InvalidArgumentException("The slug cannot be null or empty");
+        if (strlen($slug) == 0) {
+            throw new \InvalidArgumentException("The slug cannot be empty");
         }
 
-        if (empty($title)) {
-            throw new \InvalidArgumentException("The title cannot be null or empty");
+        if (strlen($title) == 0) {
+            throw new \InvalidArgumentException("The title cannot be empty");
         }
 
         $this->sku = $sku;
