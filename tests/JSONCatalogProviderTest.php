@@ -1,5 +1,4 @@
 <?php
-namespace Wambo\Catalog\Tests;
 
 use League\Flysystem\Filesystem;
 use League\Flysystem\Memory\MemoryAdapter;
@@ -52,6 +51,30 @@ class JSONCatalogTest extends \PHPUnit_Framework_TestCase
 [
     {},,],,
 ]
+JSON;
+        $filesystem->write("catalog.json", $catalogJSON);
+        $jsonCatalogProvider = new JSONCatalogProvider($filesystem, "catalog.json", $catalogMapperMock);
+
+        // act
+        $jsonCatalogProvider->getCatalog();
+    }
+
+    /**
+     * If the CatalogMapper throws an exception, the provider should throw a CatalogException.
+     *
+     * @test
+     * @expectedException Wambo\Catalog\Error\CatalogException
+     */
+    public function getAllProducts_JSONIsValid_MapperThrowsException_CatalogExceptionIsThrown()
+    {
+        // arrange
+        $filesystem = new Filesystem(new MemoryAdapter());
+        $catalogMapperMock = $this->getMockBuilder(CatalogMapper::class)->disableOriginalConstructor()->getMock();
+        $catalogMapperMock->method("getCatalog")->willThrowException(new Exception("Some mapping error"));
+        /** @var $catalogMapperMock CatalogMapper A mock for the CatalogMapper class */
+
+        $catalogJSON = <<<JSON
+[]
 JSON;
         $filesystem->write("catalog.json", $catalogJSON);
         $jsonCatalogProvider = new JSONCatalogProvider($filesystem, "catalog.json", $catalogMapperMock);
