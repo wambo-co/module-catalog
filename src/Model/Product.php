@@ -91,23 +91,23 @@ class Product
     }
 
     /**
-     * Get A short description of the product (e.g. "The first edition of our fancy T-Shirt with a unicorn pooping ice
-     * cream on the front")
+     * Get a short description text of the product (e.g. "The first edition of our fancy T-Shirt with a unicorn pooping
+     * ice cream on the front")
      *
      * @return string
      */
-    public function getSummary()
+    public function getSummaryText()
     {
-        return $this->summary;
+        return $this->content->getSummaryText();
     }
 
     /**
-     * Get the product content model.
+     * Get a full product description text
      *
-     * @return Content
+     * @return string
      */
-    public function getContent()
+    public function getProductDescription()
     {
-        return $this->content;
+        return $this->content->getProductDescription();
     }
 }
