@@ -2,6 +2,7 @@
 namespace Wambo\Catalog\Mapper;
 
 use Wambo\Catalog\Error\ProductException;
+use Wambo\Catalog\Model\Content;
 use Wambo\Catalog\Model\Product;
 use Wambo\Catalog\Validation\SKUValidator;
 use Wambo\Catalog\Validation\SlugValidator;
@@ -14,14 +15,13 @@ use Wambo\Catalog\Validation\SlugValidator;
 class ProductMapper
 {
     const FIELD_SKU = "sku";
-    const FIELD_TITLE = "title";
-    const FIELD_SUMMARY = "summary";
     const FIELD_SLUG = "slug";
+    const FIELD_TITLE = "title";
 
     /**
      * @var array $mandatoryFields A list of all mandatory fields of a Product
      */
-    private $mandatoryFields = [self::FIELD_SKU, self::FIELD_TITLE, self::FIELD_SUMMARY, self::FIELD_SLUG];
+    private $mandatoryFields = [self::FIELD_SKU, self::FIELD_SLUG, self::FIELD_TITLE];
 
     /**
      * @var SKUValidator
@@ -74,9 +74,8 @@ class ProductMapper
             $this->slugValidator->validateSlug($slug);
 
             $title = $productData[self::FIELD_TITLE];
-            $summary = $productData[self::FIELD_SUMMARY];
 
-            $product = new Product($sku, $slug, $title, $summary);
+            $product = new Product($sku, $slug, $title, new Content());
             return $product;
 
         } catch (\Exception $productException) {

@@ -138,16 +138,6 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
                     "SKU" => "a-product",
                     "SLUG" => "A-Product",
                     "TITLE" => "Super fancy product",
-                    "SUMMARY" => "Super fancy product",
-                ]
-            ],
-
-            // summary missing
-            [
-                [
-                    "sku" => "a-product",
-                    "slug" => "A-Product",
-                    "title" => "Super fancy product",
                 ]
             ],
 
@@ -156,7 +146,6 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
                 [
                     "sku" => "a-product",
                     "slug" => "A-Product",
-                    "summary" => "A super fancy product",
                 ]
             ],
 
@@ -165,7 +154,6 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
                 [
                     "sku" => "a-product",
                     "title" => "Super fancy product",
-                    "summary" => "A super fancy product",
                 ]
             ],
 
@@ -174,7 +162,6 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
                 [
                     "slug" => "A-Product",
                     "title" => "Super fancy product",
-                    "summary" => "A super fancy product",
                 ]
             ]
 

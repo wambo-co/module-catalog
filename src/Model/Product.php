@@ -22,35 +22,24 @@ class Product
      */
     private $title;
     /**
-     * @var string
+     * @var Content
      */
-    private $summary;
-
-    /**
-     * Get the unique identifier for the product (e.g. "fancy-short-1")
-     *
-     * @return string
-     */
-    public function getSku()
-    {
-        return $this->sku;
-    }
+    private $content;
 
     /**
      * Creates a new Product basic class instance.
      *
-     * @param string $sku     A unique identifier for the product (e.g. "fancy-short-1")
-     * @param string $slug    A human-readable, descriptive URL fragment for the product (e.g.
-     *                        "fancy-t-shirt-1-with-ice-cream-pooping-unicorn")
-     * @param string $title   The title of the product (e.g. "Fancy T-Shirt No. 1")
-     * @param string $summary A short description of the product (e.g. "The first edition of our fancy T-Shirt with a
-     *                        unicorn pooping ice cream on the front")
+     * @param string  $sku     A unique identifier for the product (e.g. "fancy-short-1")
+     * @param string  $slug    A human-readable, descriptive URL fragment for the product (e.g.
+     *                         "fancy-t-shirt-1-with-ice-cream-pooping-unicorn")
+     * @param string  $title   The title of the product (e.g. "Fancy T-Shirt No. 1")
+     * @param Content $content A product content model
      *
      * @throws \InvalidArgumentException If the given $sku is null or empty.
      * @throws \InvalidArgumentException If the given $slug is null or empty.
      * @throws \InvalidArgumentException If the given $title is null or empty.
      */
-    public function __construct(string $sku, string $slug, string $title, string $summary)
+    public function __construct(string $sku, string $slug, string $title, Content $content)
     {
         if (strlen($sku) == 0) {
             throw new \InvalidArgumentException("The sku cannot be empty");
@@ -67,7 +56,17 @@ class Product
         $this->sku = $sku;
         $this->slug = $slug;
         $this->title = $title;
-        $this->summary = $summary;
+        $this->content = $content;
+    }
+
+    /**
+     * Get the unique identifier for the product (e.g. "fancy-short-1")
+     *
+     * @return string
+     */
+    public function getSku()
+    {
+        return $this->sku;
     }
 
     /**
@@ -100,5 +99,15 @@ class Product
     public function getSummary()
     {
         return $this->summary;
+    }
+
+    /**
+     * Get the product content model.
+     *
+     * @return Content
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 }

@@ -2,6 +2,7 @@
 
 use Wambo\Catalog\Mapper\CatalogMapper;
 use Wambo\Catalog\Mapper\ProductMapper;
+use Wambo\Catalog\Model\Content;
 use Wambo\Catalog\Model\Product;
 
 /**
@@ -127,9 +128,9 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
         $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product("1", "product-1", "Product 1", "Summary"),
-            new Product("2", "product-2", "Product 2", "Summary"),
-            new Product("1", "product-1a", "Product 1a", "Summary"))
+            new Product("1", "product-1", "Product 1", new Content("Summary")),
+            new Product("2", "product-2", "Product 2", new Content("Summary")),
+            new Product("1", "product-1a", "Product 1a", new Content("Summary")))
         );
 
         /** @var ProductMapper $productMapper A product mapper instance */
@@ -160,9 +161,9 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
         $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product("1", "product-1", "Product 1", "Summary"),
-            new Product("2", "product-2", "Product 2", "Summary"),
-            new Product("3", "product-1", "Product 3", "Summary"))
+            new Product("1", "product-1", "Product 1", new Content("Summary")),
+            new Product("2", "product-2", "Product 2", new Content("Summary")),
+            new Product("3", "product-1", "Product 3", new Content("Summary")))
         );
 
         /** @var ProductMapper $productMapper A product mapper instance */
@@ -193,8 +194,8 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
         $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product("product", "product-a", "Product 1", "Summary"),
-            new Product("ProDuct", "product-b", "Product 2", "Summary"))
+            new Product("product", "product-a", "Product 1", new Content("Summary")),
+            new Product("ProDuct", "product-b", "Product 2", new Content("Summary")))
         );
 
         /** @var ProductMapper $productMapper A product mapper instance */
@@ -225,8 +226,8 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
         $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product("1", "a-product", "Product 1", "Summary"),
-            new Product("2", "A-Product", "Product 2", "Summary"))
+            new Product("1", "a-product", "Product 1", new Content("Summary")),
+            new Product("2", "A-Product", "Product 2", new Content("Summary")))
         );
 
         /** @var ProductMapper $productMapper A product mapper instance */
@@ -250,8 +251,8 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
         $productMapperMock = $this->createMock(ProductMapper::class);
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product("1", "product-1", "Product 1", "Summary"),
-            new Product("2", "product-2", "Product 2", "Summary"))
+            new Product("1", "product-1", "Product 1", new Content("Summary")),
+            new Product("2", "product-2", "Product 2", new Content("Summary")))
         );
 
         /** @var ProductMapper $productMapper A product mapper instance */
