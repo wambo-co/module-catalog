@@ -1,5 +1,7 @@
 <?php
+use Wambo\Catalog\Mapper\ContentMapper;
 use Wambo\Catalog\Mapper\ProductMapper;
+use Wambo\Catalog\Model\Content;
 use Wambo\Catalog\Validation\SKUValidator;
 use Wambo\Catalog\Validation\SlugValidator;
 
@@ -18,10 +20,13 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
         // arrange
         $skuValidatorMock = $this->createMock(SKUValidator::class);
         $slugValidatorMock = $this->createMock(SlugValidator::class);
+        $contentMapperMock = $this->createMock(ContentMapper::class);
+        $contentMapperMock->method("getContent")->willReturn(new Content());
 
         /** @var SKUValidator $skuValidatorMock */
         /** @var SlugValidator $slugValidatorMock */
-        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock);
+        /** @var ContentMapper $contentMapperMock */
+        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock, $contentMapperMock);
 
         $productData = array(
             "sku" => "a-product",
@@ -44,19 +49,21 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
      *
      * @test
      *
-     * @expectedException InvalidArgumentException
+     * @expectedException \Wambo\Catalog\Error\ProductException
      * @expectedExceptionMessageRegExp /The field '\w+' is missing in the given product data/
      * @dataProvider                   getProductDataWithMissingAttribute
      */
-    public function getProduct_RequiredFieldMissing_ExceptionIsThrown(array $productData)
+    public function getProduct_RequiredFieldMissing_ProductExceptionIsThrown(array $productData)
     {
         // arrange
         $skuValidatorMock = $this->createMock(SKUValidator::class);
         $slugValidatorMock = $this->createMock(SlugValidator::class);
+        $contentMapperMock = $this->createMock(ContentMapper::class);
 
         /** @var SKUValidator $skuValidatorMock */
         /** @var SlugValidator $slugValidatorMock */
-        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock);
+        /** @var ContentMapper $contentMapperMock */
+        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock, $contentMapperMock);
 
         // act
         $productMapper->getProduct($productData);
@@ -75,10 +82,12 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
         $skuValidatorMock->method("validateSKU")->willThrowException(new Exception("Something wrong with the SKU"));
 
         $slugValidatorMock = $this->createMock(SlugValidator::class);
+        $contentMapperMock = $this->createMock(ContentMapper::class);
 
         /** @var SKUValidator $skuValidatorMock */
         /** @var SlugValidator $slugValidatorMock */
-        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock);
+        /** @var ContentMapper $contentMapperMock */
+        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock, $contentMapperMock);
 
         $productData = array(
             "sku" => "a-product",
@@ -105,9 +114,12 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
         $slugValidatorMock = $this->createMock(SlugValidator::class);
         $slugValidatorMock->method("validateSlug")->willThrowException(new Exception("Something wrong with the Slug"));
 
+        $contentMapperMock = $this->createMock(ContentMapper::class);
+
         /** @var SKUValidator $skuValidatorMock */
         /** @var SlugValidator $slugValidatorMock */
-        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock);
+        /** @var ContentMapper $contentMapperMock */
+        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock, $contentMapperMock);
 
         $productData = array(
             "sku" => "a-product",

@@ -26,7 +26,7 @@ class Content
      */
     public function __construct(string $summaryText = "", string $productDescription = "")
     {
-        $this->summaryText = $summaryText;
+        $this->summaryText = trim($summaryText);
         $this->productDescription = $productDescription;
     }
 

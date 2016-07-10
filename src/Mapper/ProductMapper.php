@@ -31,17 +31,23 @@ class ProductMapper
      * @var SlugValidator
      */
     private $slugValidator;
+    /**
+     * @var ContentMapper
+     */
+    private $contentMapper;
 
     /**
      * Creates a new ProductMapper instance
      *
-     * @param SKUValidator  $SKUValidator A class for validating SKUs
+     * @param SKUValidator  $SKUValidator  A class for validating SKUs
      * @param SlugValidator $slugValidator A class for validating slugs
+     * @param ContentMapper $contentMapper A class for mapping product content
      */
-    public function __construct(SKUValidator $SKUValidator, SlugValidator $slugValidator)
+    public function __construct(SKUValidator $SKUValidator, SlugValidator $slugValidator, ContentMapper $contentMapper)
     {
         $this->SKUValidator = $SKUValidator;
         $this->slugValidator = $slugValidator;
+        $this->contentMapper = $contentMapper;
     }
 
     /**
@@ -51,6 +57,7 @@ class ProductMapper
      *
      * @return Product
      *
+     * @throws ProductException If a mandatory field is missing
      * @throws ProductException If the no Product could be created from the given product data
      */
     public function getProduct(array $productData)
@@ -58,7 +65,7 @@ class ProductMapper
         // check if all mandatory fields are present
         foreach ($this->mandatoryFields as $mandatoryField) {
             if (!array_key_exists($mandatoryField, $productData)) {
-                throw new \InvalidArgumentException("The field '$mandatoryField' is missing in the given product data");
+                throw new ProductException("The field '$mandatoryField' is missing in the given product data");
             }
         }
 
@@ -73,9 +80,13 @@ class ProductMapper
             $slug = $productData[self::FIELD_SLUG];
             $this->slugValidator->validateSlug($slug);
 
+            // product title
             $title = $productData[self::FIELD_TITLE];
 
-            $product = new Product($sku, $slug, $title, new Content());
+            // product content
+            $content = $this->contentMapper->getContent($productData);
+
+            $product = new Product($sku, $slug, $title, $content);
             return $product;
 
         } catch (\Exception $productException) {
