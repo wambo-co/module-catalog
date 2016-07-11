@@ -14,9 +14,6 @@ class ContentMapper
     const FIELD_SUMMARY = "summary";
     const FIELD_DESCRIPTION = "description";
 
-    const SUMMARY_MIN_LENGTH = 5;
-    const SUMMARY_MAX_LENGTH = 140;
-
     /**
      * @var array $mandatoryFields A list of all mandatory fields of a Content
      */
@@ -48,21 +45,20 @@ class ContentMapper
             }
         }
 
-        // summary
-        $summary = $contentData[self::FIELD_SUMMARY];
-        if (strlen($summary) < self::SUMMARY_MIN_LENGTH) {
-            throw new ContentException(sprintf("The summary text should not be shorter than %s characters", self::SUMMARY_MIN_LENGTH));
-        }
-
-        if (strlen($summary) > self::SUMMARY_MAX_LENGTH) {
-            throw new ContentException(sprintf("The summary text should not be longer than %s characters", self::SUMMARY_MAX_LENGTH));
-        }
-
-        // description
-        $description = $contentData[self::FIELD_DESCRIPTION];
-
         // try to create a content model from the available data
         try {
+
+            // summary
+            $summary = "";
+            if (isset($contentData[self::FIELD_SUMMARY])) {
+                $summary = $contentData[self::FIELD_SUMMARY];
+            }
+
+            // description
+            $description = "";
+            if (isset($contentData[self::FIELD_DESCRIPTION])) {
+                $description = $contentData[self::FIELD_DESCRIPTION];
+            }
 
             $content = new Content($summary, $description);
             return $content;

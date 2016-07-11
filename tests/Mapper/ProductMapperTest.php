@@ -21,7 +21,7 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
         $skuValidatorMock = $this->createMock(SKUValidator::class);
         $slugValidatorMock = $this->createMock(SlugValidator::class);
         $contentMapperMock = $this->createMock(ContentMapper::class);
-        $contentMapperMock->method("getContent")->willReturn(new Content());
+        $contentMapperMock->method("getContent")->willReturn(new Content("Summary", "..."));
 
         /** @var SKUValidator $skuValidatorMock */
         /** @var SlugValidator $slugValidatorMock */
