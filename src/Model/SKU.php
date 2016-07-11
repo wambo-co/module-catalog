@@ -1,14 +1,15 @@
 <?php
-namespace Wambo\Catalog\Validation;
+
+namespace Wambo\Catalog\Model;
 
 use Wambo\Catalog\Error\SKUException;
 
 /**
- * Class SKUValidator validates SKUs
+ * Class SKU represents an unique identifier (stock keeping unit) for a product (e.g. "fancy-short-1")
  *
- * @package Wambo\Catalog\Validation
+ * @package Wambo\Catalog\Model
  */
-class SKUValidator
+class SKU
 {
     /**
      * @var string $whiteSpacePattern A regular expression that matches white-space characters
@@ -46,12 +47,32 @@ class SKUValidator
      * @var int $maxLength Defines the maximum length of a SKU
      */
     private $maxLength = 32;
+    /**
+     * @var string
+     */
+    private $sku;
 
     /**
-     * Create a new SKUValidator instance.
+     * Create a new SKU instance
+     *
+     * @param string $sku A unique identifier for a product (e.g. "fancy-short-1")
+     *
+     * @throws SKUException If the given $sku is invalid
      */
-    public function __construct()
+    public function __construct(string $sku)
     {
+        $this->validateSKU($sku);
+        $this->sku = $sku;
+    }
+
+    /**
+     * Get a string representation of the current SKU.
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->sku;
     }
 
     /**
@@ -63,7 +84,7 @@ class SKUValidator
      *
      * @throws SKUException If the given $sku is invalid
      */
-    public function validateSKU(string $sku)
+    private function validateSKU(string $sku)
     {
         if (strlen($sku) == 0) {
             throw new SKUException("A SKU cannot be empty");
@@ -92,14 +113,16 @@ class SKUValidator
         $prefixMatches = [];
         $prefixContainsInvalidCharacters = preg_match($this->invalidPrefixCharacters, $sku, $prefixMatches) == 1;
         if ($prefixContainsInvalidCharacters) {
-            throw new SKUException(sprintf("A SKU cannot start with the given characters: \"%s\"", implode("", $prefixMatches)));
+            throw new SKUException(sprintf("A SKU cannot start with the given characters: \"%s\"",
+                implode("", $prefixMatches)));
         }
 
         // check suffix
         $suffixMatches = [];
         $suffixContainsInvalidCharacters = preg_match($this->invalidSuffixCharacters, $sku, $suffixMatches) == 1;
         if ($suffixContainsInvalidCharacters) {
-            throw new SKUException(sprintf("A SKU cannot end with the given characters: \"%s\"", implode("", $suffixMatches)));
+            throw new SKUException(sprintf("A SKU cannot end with the given characters: \"%s\"",
+                implode("", $suffixMatches)));
         }
 
         // check minimum length

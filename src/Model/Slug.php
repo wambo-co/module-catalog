@@ -1,14 +1,23 @@
 <?php
-namespace Wambo\Catalog\Validation;
+/**
+ * Created by PhpStorm.
+ * User: andyk
+ * Date: 11/07/16
+ * Time: 21:37
+ */
+
+namespace Wambo\Catalog\Model;
+
 
 use Wambo\Catalog\Error\SlugException;
 
 /**
- * Class SlugValidator validates Slugs
+ * Class Slug represents a human-readable, descriptive URL fragment for the product (e.g.
+ * "fancy-t-shirt-1-with-ice-cream-pooping-unicorn")
  *
- * @package Wambo\Catalog\Validation
+ * @package Wambo\Catalog\Model
  */
-class SlugValidator
+class Slug
 {
     /**
      * @var string $whiteSpacePattern A regular expression that matches white-space characters
@@ -16,7 +25,8 @@ class SlugValidator
     private $whiteSpacePattern = '/[\s]/';
 
     /**
-     * @var string $invalidCharactersPattern A regular expression that matches all characters that are invalid for a Slug
+     * @var string $invalidCharactersPattern A regular expression that matches all characters that are invalid for a
+     *      Slug
      */
     private $invalidCharactersPattern = '/[^\p{L}\w-_:.,+]/u';
 
@@ -29,12 +39,33 @@ class SlugValidator
      * @var int $maxLength Defines the maximum length of a Slug
      */
     private $maxLength = 64;
+    /**
+     * @var string
+     */
+    private $slug;
 
     /**
      * Create a new SlugValidator instance.
+     *
+     * @param string $slug  human-readable, descriptive URL fragment for the product (e.g.
+     *                      "fancy-t-shirt-1-with-ice-cream-pooping-unicorn")
+     *
+     * @throws SlugException If the given $slug is invalid
      */
-    public function __construct()
+    public function __construct(string $slug)
     {
+        $this->validateSlug($slug);
+        $this->slug = $slug;
+    }
+
+    /**
+     * Get a string representation of the current Slug.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->slug;
     }
 
     /**
@@ -46,7 +77,7 @@ class SlugValidator
      *
      * @throws SlugException If the given $sku is invalid
      */
-    public function validateSlug(string $sku)
+    private function validateSlug(string $sku)
     {
         if (strlen($sku) == 0) {
             throw new SlugException("A Slug cannot be empty");
@@ -77,4 +108,5 @@ class SlugValidator
                 strlen($sku), $sku, $this->maxLength));
         }
     }
+
 }

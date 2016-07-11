@@ -32,6 +32,9 @@ class Content
      */
     public function __construct(string $summaryText = "", string $productDescription = "")
     {
+        // trim the summary
+        $summaryText = trim($summaryText);
+
         if (strlen($summaryText) < self::SUMMARY_MIN_LENGTH) {
             throw new \InvalidArgumentException(sprintf("The summary text should not be shorter than %s characters", self::SUMMARY_MIN_LENGTH));
         }

@@ -44,9 +44,10 @@ class CatalogMapper
      *
      * @return Catalog
      *
+     * @throws \InvalidArgumentException If the given $catalogData is not an array
      * @throws CatalogException
      */
-    public function getCatalog($catalogData)
+    public function getCatalog(array $catalogData)
     {
         if (is_null($catalogData)) {
             throw new \InvalidArgumentException("The given catalog data cannot be null");
@@ -71,14 +72,14 @@ class CatalogMapper
                 $product = $this->productMapper->getProduct($catalogItem);
 
                 // check for duplicate SKUs
-                $sku = strtolower(trim($product->getSku()));
+                $sku = strtolower($product->getSku()->__toString());
                 if (array_key_exists($sku, $skuIndex)) {
                     throw new CatalogException(sprintf("Cannot add a second product with the SKU '%s' to the catalog", $sku));
                 }
                 $skuIndex[$sku] = 1;
 
                 // check for duplicate Slugs
-                $slug = strtolower(trim($product->getSlug()));
+                $slug = strtolower($product->getSlug()->__toString());
                 if (array_key_exists($slug, $slugIndex)) {
                     throw new CatalogException(sprintf("Cannot add a second product with the Slug '%s' to the catalog", $slug));
                 }

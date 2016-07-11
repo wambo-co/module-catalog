@@ -10,11 +10,11 @@ namespace Wambo\Catalog\Model;
 class Product
 {
     /**
-     * @var string
+     * @var SKU
      */
     private $sku;
     /**
-     * @var string
+     * @var Slug
      */
     private $slug;
     /**
@@ -29,8 +29,8 @@ class Product
     /**
      * Creates a new Product basic class instance.
      *
-     * @param string  $sku     A unique identifier for the product (e.g. "fancy-short-1")
-     * @param string  $slug    A human-readable, descriptive URL fragment for the product (e.g.
+     * @param SKU     $sku     A unique identifier for the product (e.g. "fancy-short-1")
+     * @param Slug    $slug    A human-readable, descriptive URL fragment for the product (e.g.
      *                         "fancy-t-shirt-1-with-ice-cream-pooping-unicorn")
      * @param string  $title   The title of the product (e.g. "Fancy T-Shirt No. 1")
      * @param Content $content A product content model
@@ -39,16 +39,8 @@ class Product
      * @throws \InvalidArgumentException If the given $slug is null or empty.
      * @throws \InvalidArgumentException If the given $title is null or empty.
      */
-    public function __construct(string $sku, string $slug, string $title, Content $content)
+    public function __construct(SKU $sku, Slug $slug, string $title, Content $content)
     {
-        if (strlen($sku) == 0) {
-            throw new \InvalidArgumentException("The sku cannot be empty");
-        }
-
-        if (strlen($slug) == 0) {
-            throw new \InvalidArgumentException("The slug cannot be empty");
-        }
-
         if (strlen($title) == 0) {
             throw new \InvalidArgumentException("The title cannot be empty");
         }
@@ -62,7 +54,7 @@ class Product
     /**
      * Get the unique identifier for the product (e.g. "fancy-short-1")
      *
-     * @return string
+     * @return SKU
      */
     public function getSku()
     {
@@ -73,7 +65,7 @@ class Product
      * Get the human-readable, descriptive URL fragment for the product (e.g.
      *                        "fancy-t-shirt-1-with-ice-cream-pooping-unicorn")
      *
-     * @return string
+     * @return Slug
      */
     public function getSlug()
     {

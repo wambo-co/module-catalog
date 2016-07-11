@@ -2,8 +2,6 @@
 use Wambo\Catalog\Mapper\ContentMapper;
 use Wambo\Catalog\Mapper\ProductMapper;
 use Wambo\Catalog\Model\Content;
-use Wambo\Catalog\Validation\SKUValidator;
-use Wambo\Catalog\Validation\SlugValidator;
 
 /**
  * Class ProductMapperTest tests the Wambo\Catalog\Mapper\ProductMapper class.
@@ -18,15 +16,11 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
     public function getProduct_AllRequiredFieldsPresent_ValidationPasses_ProductIsReturned()
     {
         // arrange
-        $skuValidatorMock = $this->createMock(SKUValidator::class);
-        $slugValidatorMock = $this->createMock(SlugValidator::class);
         $contentMapperMock = $this->createMock(ContentMapper::class);
         $contentMapperMock->method("getContent")->willReturn(new Content("Summary", "..."));
 
-        /** @var SKUValidator $skuValidatorMock */
-        /** @var SlugValidator $slugValidatorMock */
         /** @var ContentMapper $contentMapperMock */
-        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock, $contentMapperMock);
+        $productMapper = new ProductMapper($contentMapperMock);
 
         $productData = array(
             "sku" => "a-product",
@@ -56,14 +50,10 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
     public function getProduct_RequiredFieldMissing_ProductExceptionIsThrown(array $productData)
     {
         // arrange
-        $skuValidatorMock = $this->createMock(SKUValidator::class);
-        $slugValidatorMock = $this->createMock(SlugValidator::class);
         $contentMapperMock = $this->createMock(ContentMapper::class);
 
-        /** @var SKUValidator $skuValidatorMock */
-        /** @var SlugValidator $slugValidatorMock */
         /** @var ContentMapper $contentMapperMock */
-        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock, $contentMapperMock);
+        $productMapper = new ProductMapper($contentMapperMock);
 
         // act
         $productMapper->getProduct($productData);
@@ -78,19 +68,14 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
     public function getProduct_AllRequiredFieldsPresent_SkuValidationFails_ProductIsReturned()
     {
         // arrange
-        $skuValidatorMock = $this->createMock(SKUValidator::class);
-        $skuValidatorMock->method("validateSKU")->willThrowException(new Exception("Something wrong with the SKU"));
-
-        $slugValidatorMock = $this->createMock(SlugValidator::class);
         $contentMapperMock = $this->createMock(ContentMapper::class);
+        $contentMapperMock->method("getContent")->willReturn(new Content("Summary", "..."));
 
-        /** @var SKUValidator $skuValidatorMock */
-        /** @var SlugValidator $slugValidatorMock */
         /** @var ContentMapper $contentMapperMock */
-        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock, $contentMapperMock);
+        $productMapper = new ProductMapper($contentMapperMock);
 
         $productData = array(
-            "sku" => "a-product",
+            "sku" => "a",
             "slug" => "A-Product",
             "title" => "Super fancy product",
             "summary" => "A super fancy product",
@@ -109,21 +94,15 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
     public function getProduct_AllRequiredFieldsPresent_SlugValidationFails_ProductIsReturned()
     {
         // arrange
-        $skuValidatorMock = $this->createMock(SKUValidator::class);
-
-        $slugValidatorMock = $this->createMock(SlugValidator::class);
-        $slugValidatorMock->method("validateSlug")->willThrowException(new Exception("Something wrong with the Slug"));
-
         $contentMapperMock = $this->createMock(ContentMapper::class);
+        $contentMapperMock->method("getContent")->willReturn(new Content("A super fancy product", "..."));
 
-        /** @var SKUValidator $skuValidatorMock */
-        /** @var SlugValidator $slugValidatorMock */
         /** @var ContentMapper $contentMapperMock */
-        $productMapper = new ProductMapper($skuValidatorMock, $slugValidatorMock, $contentMapperMock);
+        $productMapper = new ProductMapper($contentMapperMock);
 
         $productData = array(
             "sku" => "a-product",
-            "slug" => "A-Product",
+            "slug" => "A/Product",
             "title" => "Super fancy product",
             "summary" => "A super fancy product",
         );

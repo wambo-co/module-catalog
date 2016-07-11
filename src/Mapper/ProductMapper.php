@@ -4,6 +4,8 @@ namespace Wambo\Catalog\Mapper;
 use Wambo\Catalog\Error\ProductException;
 use Wambo\Catalog\Model\Content;
 use Wambo\Catalog\Model\Product;
+use Wambo\Catalog\Model\SKU;
+use Wambo\Catalog\Model\Slug;
 use Wambo\Catalog\Validation\SKUValidator;
 use Wambo\Catalog\Validation\SlugValidator;
 
@@ -24,14 +26,6 @@ class ProductMapper
     private $mandatoryFields = [self::FIELD_SKU, self::FIELD_SLUG, self::FIELD_TITLE];
 
     /**
-     * @var SKUValidator
-     */
-    private $SKUValidator;
-    /**
-     * @var SlugValidator
-     */
-    private $slugValidator;
-    /**
      * @var ContentMapper
      */
     private $contentMapper;
@@ -39,14 +33,10 @@ class ProductMapper
     /**
      * Creates a new ProductMapper instance
      *
-     * @param SKUValidator  $SKUValidator  A class for validating SKUs
-     * @param SlugValidator $slugValidator A class for validating slugs
      * @param ContentMapper $contentMapper A class for mapping product content
      */
-    public function __construct(SKUValidator $SKUValidator, SlugValidator $slugValidator, ContentMapper $contentMapper)
+    public function __construct(ContentMapper $contentMapper)
     {
-        $this->SKUValidator = $SKUValidator;
-        $this->slugValidator = $slugValidator;
         $this->contentMapper = $contentMapper;
     }
 
@@ -73,12 +63,10 @@ class ProductMapper
         try {
 
             // sku
-            $sku = $productData[self::FIELD_SKU];
-            $this->SKUValidator->validateSKU($sku);
+            $sku = new SKU($productData[self::FIELD_SKU]);
 
             // slug
-            $slug = $productData[self::FIELD_SLUG];
-            $this->slugValidator->validateSlug($slug);
+            $slug = new Slug($productData[self::FIELD_SLUG]);
 
             // product title
             $title = $productData[self::FIELD_TITLE];

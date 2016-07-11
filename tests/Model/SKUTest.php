@@ -1,10 +1,10 @@
 <?php
-use Wambo\Catalog\Validation\SKUValidator;
+use Wambo\Catalog\Model\SKU;
 
 /**
- * Class SKUValidatorTest contains tests for the Wambo\Catalog\Validation\SKUValidator class.
+ * Class SKUTest contains tests for the Wambo\Catalog\Model\SKU class.
  */
-class SKUValidatorTest extends PHPUnit_Framework_TestCase
+class SKUTest extends PHPUnit_Framework_TestCase
 {
     /**
      * If the given SKU is valid validateSKU should not throw an exception
@@ -16,14 +16,11 @@ class SKUValidatorTest extends PHPUnit_Framework_TestCase
      */
     public function validateSKU_validSKUs_NoExceptionIsThrown($sku)
     {
-        // arrange
-        $skuValidator = new SKUValidator();
-
         // act
         $exceptionThrown = false;
         try {
 
-            $skuValidator->validateSKU($sku);
+            new SKU($sku);
             $exceptionThrown = false;
 
         } catch (Exception $validationException) {
@@ -45,14 +42,11 @@ class SKUValidatorTest extends PHPUnit_Framework_TestCase
      */
     public function validateSKU_invalidSKUs_ExceptionIsThrown($sku, $expectedExceptionMessage)
     {
-        // arrange
-        $skuValidator = new SKUValidator();
-
         // act
         $exceptionThrown = false;
         try {
 
-            $skuValidator->validateSKU($sku);
+            new SKU($sku);
             $exceptionThrown = false;
 
         } catch (Exception $validationException) {

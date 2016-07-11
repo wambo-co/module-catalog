@@ -1,10 +1,10 @@
 <?php
-use Wambo\Catalog\Validation\SlugValidator;
+use Wambo\Catalog\Model\Slug;
 
 /**
- * Class SlugValidatorTest tests the Wambo\Catalog\Validation\SlugValidator class.
+ * Class SlugTest tests the Wambo\Catalog\Model\Slug class.
  */
-class SlugValidatorTest extends PHPUnit_Framework_TestCase
+class SlugTest extends PHPUnit_Framework_TestCase
 {
     /**
      * If the given Slug is valid validateSlug should not throw an exception
@@ -16,14 +16,11 @@ class SlugValidatorTest extends PHPUnit_Framework_TestCase
      */
     public function validateSlug_validSlugs_NoExceptionIsThrown($sku)
     {
-        // arrange
-        $skuValidator = new SlugValidator();
-
         // act
         $exceptionThrown = false;
         try {
 
-            $skuValidator->validateSlug($sku);
+            new Slug($sku);
             $exceptionThrown = false;
 
         } catch (Exception $validationException) {
@@ -45,14 +42,11 @@ class SlugValidatorTest extends PHPUnit_Framework_TestCase
      */
     public function validateSlug_invalidSlugs_ExceptionIsThrown($sku, $expectedExceptionMessage)
     {
-        // arrange
-        $skuValidator = new SlugValidator();
-
         // act
         $exceptionThrown = false;
         try {
 
-            $skuValidator->validateSlug($sku);
+            new Slug($sku);
             $exceptionThrown = false;
 
         } catch (Exception $validationException) {

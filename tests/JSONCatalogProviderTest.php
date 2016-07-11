@@ -124,10 +124,8 @@ JSON;
     {
         // arrange
         $filesystem = new Filesystem(new MemoryAdapter());
-        $skuValidator = new SKUValidator();
-        $slugValidator = new SlugValidator();
         $contentMapper = new ContentMapper();
-        $productMapper = new ProductMapper($skuValidator, $slugValidator, $contentMapper);
+        $productMapper = new ProductMapper($contentMapper);
         $catalogMapper = new CatalogMapper($productMapper);
 
         $catalogJSON = <<<JSON
@@ -173,10 +171,8 @@ JSON;
     {
         // arrange
         $filesystem = new Filesystem(new MemoryAdapter());
-        $skuValidator = new SKUValidator();
-        $slugValidator = new SlugValidator();
         $contentMapper = new ContentMapper();
-        $productMapper = new ProductMapper($skuValidator, $slugValidator, $contentMapper);
+        $productMapper = new ProductMapper($contentMapper);
         $catalogMapper = new CatalogMapper($productMapper);
 
         $catalogJSON = <<<JSON

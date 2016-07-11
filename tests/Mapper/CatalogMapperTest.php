@@ -4,6 +4,8 @@ use Wambo\Catalog\Mapper\CatalogMapper;
 use Wambo\Catalog\Mapper\ProductMapper;
 use Wambo\Catalog\Model\Content;
 use Wambo\Catalog\Model\Product;
+use Wambo\Catalog\Model\SKU;
+use Wambo\Catalog\Model\Slug;
 
 /**
  * Class CatalogMapperTest contains tests for the CatalogMapper class.
@@ -12,66 +14,13 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @expectedException \InvalidArgumentException
-     */
-    public function getCatalog_NullIsGiven_InvalidArgumentExceptionIsThrown()
-    {
-        // arrange
-        $catalogData = null;
-        $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
-        /** @var ProductMapper $productMapper A product mapper instance */
-
-        $productMapper = new CatalogMapper($productMapperMock);
-
-        // act
-        $productMapper->getCatalog($catalogData);
-    }
-
-    /**
-     * @test
-     * @expectedException \InvalidArgumentException
-     */
-    public function getCatalog_stdClassIsGiven_InvalidArgumentExceptionIsThrown()
-    {
-        // arrange
-        $catalogData = new stdClass();
-        $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
-        /** @var ProductMapper $productMapper A product mapper instance */
-
-        $productMapper = new CatalogMapper($productMapperMock);
-
-
-        // act
-        $productMapper->getCatalog($catalogData);
-    }
-
-    /**
-     * @test
-     * @expectedException \InvalidArgumentException
-     */
-    public function getCatalog_StringIsGiven_InvalidArgumentExceptionIsThrown()
-    {
-        // arrange
-        $catalogData = "";
-        $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
-        /** @var ProductMapper $productMapper A product mapper instance */
-
-        $productMapper = new CatalogMapper($productMapperMock);
-
-
-        // act
-        $productMapper->getCatalog($catalogData);
-    }
-
-    /**
-     * @test
      */
     public function getCatalog_EmptyArrayIsGiven_EmptyCatalogIsReturned()
     {
         // arrange
         $catalogData = array();
         $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
-        /** @var ProductMapper $productMapper A product mapper instance */
+        /** @var ProductMapper $productMapperMock A product mapper instance */
 
         $productMapper = new CatalogMapper($productMapperMock);
 
@@ -93,13 +42,13 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
     {
         // arrange
         $catalogData = [
-            ["sku" => "1"],
-            ["sku" => "2"],
+            ["sku" => "0001"],
+            ["sku" => "0002"],
         ];
-        $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
+        $productMapperMock = $this->createMock(ProductMapper::class);
         $productMapperMock->method("getProduct")->willThrowException(new Exception("Some product mapper exception"));
 
-        /** @var ProductMapper $productMapper A product mapper instance */
+        /** @var ProductMapper $productMapperMock A product mapper instance */
 
         $productMapper = new CatalogMapper($productMapperMock);
 
@@ -115,25 +64,25 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
      * @test
      *
      * @expectedException Wambo\Catalog\Error\CatalogException
-     * @expectedExceptionMessageRegExp /Cannot add a second product with the SKU '1'/
+     * @expectedExceptionMessageRegExp /Cannot add a second product with the SKU '.+'/
      */
     public function getCatalog_ArrayWithDuplicateSKUGiven_CatalogExceptionIsThrown()
     {
         // arrange
         $catalogData = [
-            ["sku" => "1"],
-            ["sku" => "2"],
-            ["sku" => "1"],
+            ["sku" => "0001"],
+            ["sku" => "0002"],
+            ["sku" => "0001"],
         ];
 
         $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product("1", "product-1", "Product 1", new Content("Summary")),
-            new Product("2", "product-2", "Product 2", new Content("Summary")),
-            new Product("1", "product-1a", "Product 1a", new Content("Summary")))
+            new Product(new SKU("0001"), new Slug("product-1"), "Product 1", new Content("Summary")),
+            new Product(new SKU("0002"), new Slug("product-2"), "Product 2", new Content("Summary")),
+            new Product(new SKU("0001"), new Slug("product-1a"), "Product 1a", new Content("Summary")))
         );
 
-        /** @var ProductMapper $productMapper A product mapper instance */
+        /** @var ProductMapper $productMapperMock A product mapper instance */
 
         $productMapper = new CatalogMapper($productMapperMock);
 
@@ -154,19 +103,19 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
     {
         // arrange
         $catalogData = [
-            ["sku" => "1"],
-            ["sku" => "2"],
-            ["sku" => "3"],
+            ["sku" => "0001"],
+            ["sku" => "0002"],
+            ["sku" => "0003"],
         ];
 
         $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product("1", "product-1", "Product 1", new Content("Summary")),
-            new Product("2", "product-2", "Product 2", new Content("Summary")),
-            new Product("3", "product-1", "Product 3", new Content("Summary")))
+            new Product(new SKU("0001"), new Slug("product-1"), "Product 1", new Content("Summary")),
+            new Product(new SKU("0002"), new Slug("product-2"), "Product 2", new Content("Summary")),
+            new Product(new SKU("0003"), new Slug("product-1"), "Product 3", new Content("Summary")))
         );
 
-        /** @var ProductMapper $productMapper A product mapper instance */
+        /** @var ProductMapper $productMapperMock A product mapper instance */
 
         $productMapper = new CatalogMapper($productMapperMock);
 
@@ -187,18 +136,18 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
     {
         // arrange
         $catalogData = [
-            ["sku" => "1"],
-            ["sku" => "2"],
-            ["sku" => "3"],
+            ["sku" => "0001"],
+            ["sku" => "0002"],
+            ["sku" => "0003"],
         ];
 
-        $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
+        $productMapperMock = $this->createMock(ProductMapper::class);
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product("product", "product-a", "Product 1", new Content("Summary")),
-            new Product("ProDuct", "product-b", "Product 2", new Content("Summary")))
+            new Product(new SKU("product"), new Slug("product-a"), "Product 1", new Content("Summary")),
+            new Product(new SKU("product"), new Slug("product-b"), "Product 2", new Content("Summary")))
         );
 
-        /** @var ProductMapper $productMapper A product mapper instance */
+        /** @var ProductMapper $productMapperMock A product mapper instance */
 
         $productMapper = new CatalogMapper($productMapperMock);
 
@@ -219,18 +168,18 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
     {
         // arrange
         $catalogData = [
-            ["sku" => "1"],
-            ["sku" => "2"],
-            ["sku" => "3"],
+            ["sku" => "0001"],
+            ["sku" => "0002"],
+            ["sku" => "0003"],
         ];
 
         $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product("1", "a-product", "Product 1", new Content("Summary")),
-            new Product("2", "A-Product", "Product 2", new Content("Summary")))
+            new Product(new SKU("0001"), new Slug("a-product"), "Product 1", new Content("Summary")),
+            new Product(new SKU("0002"), new Slug("A-Product"), "Product 2", new Content("Summary")))
         );
 
-        /** @var ProductMapper $productMapper A product mapper instance */
+        /** @var ProductMapper $productMapperMock A product mapper instance */
 
         $productMapper = new CatalogMapper($productMapperMock);
 
@@ -245,17 +194,17 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
     {
         // arrange
         $catalogData = [
-            ["sku" => "1"],
-            ["sku" => "2"],
+            ["sku" => "0001"],
+            ["sku" => "0002"],
         ];
 
         $productMapperMock = $this->createMock(ProductMapper::class);
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product("1", "product-1", "Product 1", new Content("Summary")),
-            new Product("2", "product-2", "Product 2", new Content("Summary")))
+            new Product(new SKU("0001"), new Slug("product-1"), "Product 1", new Content("Summary")),
+            new Product(new SKU("0002"), new Slug("product-2"), "Product 2", new Content("Summary")))
         );
 
-        /** @var ProductMapper $productMapper A product mapper instance */
+        /** @var ProductMapper $productMapperMock A product mapper instance */
 
         $productMapper = new CatalogMapper($productMapperMock);
 
