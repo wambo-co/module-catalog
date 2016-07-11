@@ -1,6 +1,8 @@
 <?php
 namespace Wambo\Catalog\Model;
 
+use Wambo\Catalog\Error\ContentException;
+
 /**
  * Class Content contains the product summary and description text
  *
@@ -27,8 +29,8 @@ class Content
      *                                   T-Shirt with a unicorn pooping ice cream on the front"; optional)
      * @param string $productDescription A full product description text (optional)
      *
-     * @throws \InvalidArgumentException If the summary text is too short
-     * @throws \InvalidArgumentException If the summary text is too long
+     * @throws ContentException If the summary text is too short
+     * @throws ContentException If the summary text is too long
      */
     public function __construct(string $summaryText = "", string $productDescription = "")
     {
@@ -36,11 +38,11 @@ class Content
         $summaryText = trim($summaryText);
 
         if (strlen($summaryText) < self::SUMMARY_MIN_LENGTH) {
-            throw new \InvalidArgumentException(sprintf("The summary text should not be shorter than %s characters", self::SUMMARY_MIN_LENGTH));
+            throw new ContentException(sprintf("The summary text should not be shorter than %s characters", self::SUMMARY_MIN_LENGTH));
         }
 
         if (strlen($summaryText) > self::SUMMARY_MAX_LENGTH) {
-            throw new \InvalidArgumentException(sprintf("The summary text should not be longer than %s characters", self::SUMMARY_MAX_LENGTH));
+            throw new ContentException(sprintf("The summary text should not be longer than %s characters", self::SUMMARY_MAX_LENGTH));
         }
 
         $this->summaryText = trim($summaryText);
