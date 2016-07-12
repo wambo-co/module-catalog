@@ -7,7 +7,7 @@ use Wambo\Catalog\Mapper\ContentMapper;
 class ContentMapperTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * If the given summary and description is valid a Content model with the given summary and description should be
+     * If the given content data is valid a Content model with the given content data should be
      * returned
      *
      * @test
@@ -15,7 +15,7 @@ class ContentMapperTest extends PHPUnit_Framework_TestCase
      *
      * @param array $contentData Product content data
      */
-    public function getContent_ValidSummaryAndDescriptionGiven_ContentWithSummaryAndDescriptionIsReturned($contentData)
+    public function getContent_ValidContentDataGiven_ContentWithSummaryAndDescriptionIsReturned($contentData)
     {
         // arrange
         $productMapper = new ContentMapper();
@@ -25,15 +25,16 @@ class ContentMapperTest extends PHPUnit_Framework_TestCase
 
         // assert
         $this->assertNotEmpty($content->getSummaryText(), "The summary of the content model should not be empty");
-        $this->assertNotEmpty($content->getProductDescription(), "The description of the content model should not be empty");
+        $this->assertNotEmpty($content->getProductDescription(),
+            "The description of the content model should not be empty");
     }
 
     /**
-     * If the given summary and description is valid a Content model with the given summary and description should be
+     * If the given content data is valid a Content model with the given content data should be
      * returned
      *
      * @test
-     * @dataProvider getContentDataWithMissingAttributes
+     * @dataProvider                   getContentDataWithMissingAttributes
      * @expectedException Wambo\Catalog\Error\ContentException
      * @expectedExceptionMessageRegExp /The field '.+' is missing in the given content data/
      *
@@ -49,16 +50,16 @@ class ContentMapperTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * If the given summary is invalid a ContentException should be thrown
+     * If some of the given attributes are invalid a ContentException should be thrown
      *
      * @test
-     * @dataProvider getContentWithInvalidSummary
+     * @dataProvider                   getContentWithInvalidAttributes
      * @expectedException Wambo\Catalog\Error\ContentException
-     * @expectedExceptionMessageRegExp /The summary text should not be (shorter|longer) than \d+ characters/
+     * @expectedExceptionMessageRegExp /Failed to create a content model from the given data/
      *
      * @param array $contentData Product content data
      */
-    public function getContent_InvalidSummary_ContentExceptionIsThrown($contentData)
+    public function getContent_InvalidAttributes_ContentExceptionIsThrown($contentData)
     {
         // arrange
         $productMapper = new ContentMapper();
@@ -69,17 +70,21 @@ class ContentMapperTest extends PHPUnit_Framework_TestCase
 
     /**
      * Get a list of valid content data for testing
+     *
      * @return array
      */
-    public static function getValidContentData() {
+    public static function getValidContentData()
+    {
         return array(
             [
                 [
+                    "title" => "Product Title",
                     "summary" => "A product summary",
                     "description" => "A detailed product description",
                 ],
 
                 [
+                    "title" => "Product Title",
                     "summary" => "ABCdefghijklmnopqrstuvwxyzöüä.ABCdefghijklmnopqrstuvwxyzöüä.ABCdefghijklmnopqrstuvwxyzöüä.ABCdefghijklmnopqrstuvwxyzöüä.",
                     "description" => "A detailed product description ...",
                 ]
@@ -88,23 +93,37 @@ class ContentMapperTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get a list of valid content data for testing
+     * Get a list of content data with invalid attributes for testing
+     *
      * @return array
      */
-    public static function getContentWithInvalidSummary() {
+    public static function getContentWithInvalidAttributes()
+    {
         return array(
             [
-                // empty
+                // title empty or too short
+                [
+                    "title" => "",
+                    "summary" => "Product summary"
+                ],
+
+                // title too long
+                [
+                    "title" => "ABCdefghijklmnopqrstuvwxyzöüä.ABCdefghijklmnopqrstuvwxyzöüä.ABCdefghijklmnopqrstuvwxyzöüä.",
+                    "summary" => "Product summary"
+                ],
+
+                // summary empty
                 [
                     "summary" => "",
                 ],
 
-                // too short
+                // summary too short
                 [
                     "summary" => "A",
                 ],
 
-                // too long
+                // summary too long
                 [
                     "summary" => "ABCdefghijklmnopqrstuvwxyzöüä.ABCdefghijklmnopqrstuvwxyzöüä.ABCdefghijklmnopqrstuvwxyzöüä.ABCdefghijklmnopqrstuvwxyzöüä.ABCdefghijklmnopqrstuvwxyzöüä.",
                 ]
@@ -114,19 +133,36 @@ class ContentMapperTest extends PHPUnit_Framework_TestCase
 
     /**
      * Get a list of content data object with missing attribtues for testing
+     *
      * @return array
      */
-    public static function getContentDataWithMissingAttributes() {
+    public static function getContentDataWithMissingAttributes()
+    {
         return array(
             [
-                // wrong casing
+                // title: wrong casing
                 [
+                    "Title" => "Product title",
+                    "summary" => "A product summary",
+                    "description" => "A detailed product description",
+                ],
+
+                // title: missing
+                [
+                    "summary" => "A product summary",
+                    "description" => "A detailed product description",
+                ],
+
+                // summary: wrong casing
+                [
+                    "title" => "Product title",
                     "SUMMARY" => "A product summary",
                     "description" => "A detailed product description",
                 ],
 
-                // summary missing
+                // summary: missing
                 [
+                    "title" => "Product title",
                     "description" => "A detailed product description",
                 ]
             ]

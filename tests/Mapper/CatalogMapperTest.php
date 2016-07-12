@@ -77,9 +77,9 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
         $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product(new SKU("0001"), new Slug("product-1"), "Product 1", new Content("Summary")),
-            new Product(new SKU("0002"), new Slug("product-2"), "Product 2", new Content("Summary")),
-            new Product(new SKU("0001"), new Slug("product-1a"), "Product 1a", new Content("Summary")))
+            new Product(new SKU("0001"), new Slug("product-1"), new Content("Title", "Summary")),
+            new Product(new SKU("0002"), new Slug("product-2"), new Content("Title", "Summary")),
+            new Product(new SKU("0001"), new Slug("product-1a"), new Content("Title", "Summary")))
         );
 
         /** @var ProductMapper $productMapperMock A product mapper instance */
@@ -110,9 +110,9 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
         $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product(new SKU("0001"), new Slug("product-1"), "Product 1", new Content("Summary")),
-            new Product(new SKU("0002"), new Slug("product-2"), "Product 2", new Content("Summary")),
-            new Product(new SKU("0003"), new Slug("product-1"), "Product 3", new Content("Summary")))
+            new Product(new SKU("0001"), new Slug("product-1"), new Content("Title", "Summary")),
+            new Product(new SKU("0002"), new Slug("product-2"), new Content("Title", "Summary")),
+            new Product(new SKU("0003"), new Slug("product-1"), new Content("Title", "Summary")))
         );
 
         /** @var ProductMapper $productMapperMock A product mapper instance */
@@ -143,8 +143,8 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
         $productMapperMock = $this->createMock(ProductMapper::class);
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product(new SKU("product"), new Slug("product-a"), "Product 1", new Content("Summary")),
-            new Product(new SKU("product"), new Slug("product-b"), "Product 2", new Content("Summary")))
+            new Product(new SKU("product"), new Slug("product-a"), new Content("Title", "Summary")),
+            new Product(new SKU("product"), new Slug("product-b"), new Content("Title", "Summary")))
         );
 
         /** @var ProductMapper $productMapperMock A product mapper instance */
@@ -175,8 +175,8 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
         $productMapperMock = $this->getMockBuilder(ProductMapper::class)->disableOriginalConstructor()->getMock();
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product(new SKU("0001"), new Slug("a-product"), "Product 1", new Content("Summary")),
-            new Product(new SKU("0002"), new Slug("A-Product"), "Product 2", new Content("Summary")))
+            new Product(new SKU("0001"), new Slug("a-product"), new Content("Title", "Summary")),
+            new Product(new SKU("0002"), new Slug("A-Product"), new Content("Title", "Summary")))
         );
 
         /** @var ProductMapper $productMapperMock A product mapper instance */
@@ -200,8 +200,8 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
         $productMapperMock = $this->createMock(ProductMapper::class);
         $productMapperMock->method("getProduct")->will($this->onConsecutiveCalls(
-            new Product(new SKU("0001"), new Slug("product-1"), "Product 1", new Content("Summary")),
-            new Product(new SKU("0002"), new Slug("product-2"), "Product 2", new Content("Summary")))
+            new Product(new SKU("0001"), new Slug("product-1"), new Content("Title", "Summary")),
+            new Product(new SKU("0002"), new Slug("product-2"), new Content("Title", "Summary")))
         );
 
         /** @var ProductMapper $productMapperMock A product mapper instance */

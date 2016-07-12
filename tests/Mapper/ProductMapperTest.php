@@ -17,7 +17,7 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
     {
         // arrange
         $contentMapperMock = $this->createMock(ContentMapper::class);
-        $contentMapperMock->method("getContent")->willReturn(new Content("Summary", "..."));
+        $contentMapperMock->method("getContent")->willReturn(new Content("Title", "Summary", "..."));
 
         /** @var ContentMapper $contentMapperMock */
         $productMapper = new ProductMapper($contentMapperMock);
@@ -51,6 +51,7 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
     {
         // arrange
         $contentMapperMock = $this->createMock(ContentMapper::class);
+        $contentMapperMock->method("getContent")->willReturn(new Content("Title", "Summary", "Description"));
 
         /** @var ContentMapper $contentMapperMock */
         $productMapper = new ProductMapper($contentMapperMock);
@@ -69,7 +70,7 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
     {
         // arrange
         $contentMapperMock = $this->createMock(ContentMapper::class);
-        $contentMapperMock->method("getContent")->willReturn(new Content("Summary", "..."));
+        $contentMapperMock->method("getContent")->willReturn(new Content("Title", "Summary", "..."));
 
         /** @var ContentMapper $contentMapperMock */
         $productMapper = new ProductMapper($contentMapperMock);
@@ -95,7 +96,7 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
     {
         // arrange
         $contentMapperMock = $this->createMock(ContentMapper::class);
-        $contentMapperMock->method("getContent")->willReturn(new Content("A super fancy product", "..."));
+        $contentMapperMock->method("getContent")->willReturn(new Content("Title", "A super fancy product", "..."));
 
         /** @var ContentMapper $contentMapperMock */
         $productMapper = new ProductMapper($contentMapperMock);
@@ -128,15 +129,6 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
                 [
                     "SKU" => "a-product",
                     "SLUG" => "A-Product",
-                    "TITLE" => "Super fancy product",
-                ]
-            ],
-
-            // title missing
-            [
-                [
-                    "sku" => "a-product",
-                    "slug" => "A-Product",
                 ]
             ],
 
@@ -144,7 +136,6 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
             [
                 [
                     "sku" => "a-product",
-                    "title" => "Super fancy product",
                 ]
             ],
 
@@ -152,7 +143,6 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
             [
                 [
                     "slug" => "A-Product",
-                    "title" => "Super fancy product",
                 ]
             ]
 

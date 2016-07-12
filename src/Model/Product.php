@@ -32,22 +32,13 @@ class Product
      * @param SKU     $sku     A unique identifier for the product (e.g. "fancy-short-1")
      * @param Slug    $slug    A human-readable, descriptive URL fragment for the product (e.g.
      *                         "fancy-t-shirt-1-with-ice-cream-pooping-unicorn")
-     * @param string  $title   The title of the product (e.g. "Fancy T-Shirt No. 1")
      * @param Content $content A product content model
      *
-     * @throws \InvalidArgumentException If the given $sku is null or empty.
-     * @throws \InvalidArgumentException If the given $slug is null or empty.
-     * @throws \InvalidArgumentException If the given $title is null or empty.
      */
-    public function __construct(SKU $sku, Slug $slug, string $title, Content $content)
+    public function __construct(SKU $sku, Slug $slug, Content $content)
     {
-        if (strlen($title) == 0) {
-            throw new \InvalidArgumentException("The title cannot be empty");
-        }
-
         $this->sku = $sku;
         $this->slug = $slug;
-        $this->title = $title;
         $this->content = $content;
     }
 
@@ -79,7 +70,7 @@ class Product
      */
     public function getTitle()
     {
-        return $this->title;
+        return $this->content->getTitle();
     }
 
     /**

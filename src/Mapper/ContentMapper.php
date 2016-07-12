@@ -11,13 +11,14 @@ use Wambo\Catalog\Model\Content;
  */
 class ContentMapper
 {
+    const FIELD_TITLE = "title";
     const FIELD_SUMMARY = "summary";
     const FIELD_DESCRIPTION = "description";
 
     /**
      * @var array $mandatoryFields A list of all mandatory fields of a Content
      */
-    private $mandatoryFields = [self::FIELD_SUMMARY];
+    private $mandatoryFields = [self::FIELD_TITLE, self::FIELD_SUMMARY];
 
     /**
      * Creates a new ContentMapper instance
@@ -48,6 +49,12 @@ class ContentMapper
         // try to create a content model from the available data
         try {
 
+            // title
+            $title = "";
+            if (isset($contentData[self::FIELD_TITLE])) {
+                $title = $contentData[self::FIELD_TITLE];
+            }
+
             // summary
             $summary = "";
             if (isset($contentData[self::FIELD_SUMMARY])) {
@@ -60,7 +67,7 @@ class ContentMapper
                 $description = $contentData[self::FIELD_DESCRIPTION];
             }
 
-            $content = new Content($summary, $description);
+            $content = new Content($title, $summary, $description);
             return $content;
 
         } catch (\Exception $contentException) {

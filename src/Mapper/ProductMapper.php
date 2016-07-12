@@ -2,12 +2,9 @@
 namespace Wambo\Catalog\Mapper;
 
 use Wambo\Catalog\Error\ProductException;
-use Wambo\Catalog\Model\Content;
 use Wambo\Catalog\Model\Product;
 use Wambo\Catalog\Model\SKU;
 use Wambo\Catalog\Model\Slug;
-use Wambo\Catalog\Validation\SKUValidator;
-use Wambo\Catalog\Validation\SlugValidator;
 
 /**
  * Class ProductMapper creates \Wambo\Model\Product models from data bags with product data.
@@ -18,12 +15,11 @@ class ProductMapper
 {
     const FIELD_SKU = "sku";
     const FIELD_SLUG = "slug";
-    const FIELD_TITLE = "title";
 
     /**
      * @var array $mandatoryFields A list of all mandatory fields of a Product
      */
-    private $mandatoryFields = [self::FIELD_SKU, self::FIELD_SLUG, self::FIELD_TITLE];
+    private $mandatoryFields = [self::FIELD_SKU, self::FIELD_SLUG];
 
     /**
      * @var ContentMapper
@@ -68,13 +64,10 @@ class ProductMapper
             // slug
             $slug = new Slug($productData[self::FIELD_SLUG]);
 
-            // product title
-            $title = $productData[self::FIELD_TITLE];
-
             // product content
             $content = $this->contentMapper->getContent($productData);
 
-            $product = new Product($sku, $slug, $title, $content);
+            $product = new Product($sku, $slug, $content);
             return $product;
 
         } catch (\Exception $productException) {
