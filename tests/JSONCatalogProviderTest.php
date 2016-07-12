@@ -1,5 +1,6 @@
 <?php
 
+use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Memory\MemoryAdapter;
 use Wambo\Catalog\Error\CatalogException;
@@ -115,6 +116,39 @@ JSON;
 
         // assert
         $this->assertNotNull($catalog, "getCatalog should return a catalog if the mapper returned one");
+    }
+
+    /**
+     * Integration test with local filesystem
+     *
+     * @test
+     */
+    public function getCatalog_IntegrationTest_LocalSampleCatalogFile()
+    {
+        // arrange
+        $sampleCatalogFilename = "sample-catalog.json";
+        $testResourceFolderPath = realpath(__DIR__ . '/resources');
+        $adapter = new Local($testResourceFolderPath);
+        $filesystem = new Filesystem($adapter);
+
+        $contentMapper = new ContentMapper();
+        $productMapper = new ProductMapper($contentMapper);
+        $catalogMapper = new CatalogMapper($productMapper);
+
+        $jsonCatalogProvider = new JSONCatalogProvider($filesystem, $sampleCatalogFilename, $catalogMapper);
+
+        // act
+        $catalog = $jsonCatalogProvider->getCatalog();
+
+        // assert
+        foreach ($catalog->getProducts() as $product) {
+            /** @var Product $product */
+            $this->assertNotEmpty($product->getSku(), "The SKU should not be empty");
+            $this->assertNotEmpty($product->getSlug(), "The slug should not be empty");
+            $this->assertNotEmpty($product->getTitle(), "The title should not be empty");
+            $this->assertNotEmpty($product->getSummaryText(), "The summary should not be empty");
+            $this->assertNotEmpty($product->getProductDescription(), "The product description should not be empty");
+        }
     }
 
     /**
@@ -244,7 +278,7 @@ JSON;
     {
         return array(
 
-                // JavaScript instead of JSON
+            // JavaScript instead of JSON
             [
                 <<<JSON
                 var test = {
@@ -257,9 +291,10 @@ JSON;
 JSON
             ],
 
-                // Missing attribute quotes
-            [<<<JSON
-[
+            // Missing attribute quotes
+            [
+                <<<JSON
+                [
     {
         sku: "t-shirt-no-1",
         slug: "t-shirt-no-1-slug",
@@ -271,9 +306,10 @@ JSON
 JSON
             ],
 
-                // Missing comma
-            [<<<JSON
-[
+            // Missing comma
+            [
+                <<<JSON
+                [
     {
         "sku": "t-shirt-no-1"
         "slug": "t-shirt-no-1-slug"
@@ -285,9 +321,10 @@ JSON
 JSON
             ],
 
-                // Control Character
-            [<<<JSON
-[
+            // Control Character
+            [
+                <<<JSON
+                [
     {
         "sku": "t-shirt-no-1"
         "slug": "t-shirt-no-1-slug"
