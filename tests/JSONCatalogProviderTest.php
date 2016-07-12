@@ -3,15 +3,12 @@
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Memory\MemoryAdapter;
-use Wambo\Catalog\Error\CatalogException;
 use Wambo\Catalog\JSONCatalogProvider;
 use Wambo\Catalog\Mapper\CatalogMapper;
 use Wambo\Catalog\Mapper\ContentMapper;
 use Wambo\Catalog\Mapper\ProductMapper;
 use Wambo\Catalog\Model\Catalog;
 use Wambo\Catalog\Model\Product;
-use Wambo\Catalog\Validation\SKUValidator;
-use Wambo\Catalog\Validation\SlugValidator;
 
 /**
  * Class JSONCatalogTest tests the JSONCatalog class.

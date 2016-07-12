@@ -3,7 +3,6 @@ namespace Wambo\Catalog\Mapper;
 
 use Wambo\Catalog\Error\CatalogException;
 use Wambo\Catalog\Model\Catalog;
-use Wambo\Catalog\Model\Product;
 
 /**
  * Class CatalogMapper creates \Wambo\Model\Product models from catalog data
@@ -12,15 +11,6 @@ use Wambo\Catalog\Model\Product;
  */
 class CatalogMapper
 {
-    const FIELD_SKU = "sku";
-    const FIELD_TITLE = "title";
-    const FIELD_SUMMARY = "summary";
-    const FIELD_SLUG = "slug";
-
-    /**
-     * @var array $mandatoryFields A list of all mandatory fields of a Product
-     */
-    private $mandatoryFields = [self::FIELD_SKU, self::FIELD_TITLE, self::FIELD_SUMMARY, self::FIELD_SLUG];
     /**
      * @var ProductMapper
      */

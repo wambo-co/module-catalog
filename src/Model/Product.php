@@ -18,10 +18,6 @@ class Product
      */
     private $slug;
     /**
-     * @var string
-     */
-    private $title;
-    /**
      * @var Content
      */
     private $content;

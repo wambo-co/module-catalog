@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: andyk
- * Date: 11/07/16
- * Time: 21:37
- */
 
 namespace Wambo\Catalog\Model;
-
 
 use Wambo\Catalog\Error\SlugException;
 

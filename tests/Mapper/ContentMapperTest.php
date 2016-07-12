@@ -132,7 +132,7 @@ class ContentMapperTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get a list of content data object with missing attribtues for testing
+     * Get a list of content data object with missing attributes for testing
      *
      * @return array
      */

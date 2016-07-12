@@ -1,5 +1,5 @@
 <?php
-use Wambo\Catalog\Mapper\ContentMapper;
+
 use Wambo\Catalog\Model\Content;
 
 /**

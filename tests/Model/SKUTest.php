@@ -17,7 +17,6 @@ class SKUTest extends PHPUnit_Framework_TestCase
     public function validateSKU_validSKUs_NoExceptionIsThrown($sku)
     {
         // act
-        $exceptionThrown = false;
         try {
 
             new SKU($sku);
@@ -43,7 +42,6 @@ class SKUTest extends PHPUnit_Framework_TestCase
     public function validateSKU_invalidSKUs_ExceptionIsThrown($sku, $expectedExceptionMessage)
     {
         // act
-        $exceptionThrown = false;
         try {
 
             new SKU($sku);
