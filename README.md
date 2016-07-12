@@ -6,19 +6,30 @@ A product catalog module for Wambo
 
 Wambo Catalog provides read access to JSON-based product catalogs.
 
+see: [sample-catalog.json](tests/resources/sample-catalog.json)
+
+## Installation
+
+```bash
+composer require wambo/module-catalog
+```
+
 ## Usage
 
 ```php
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
 
-$filesystem = new Filesystem(new MemoryAdapter());
-$contentMapper = new ContentMapper();
-$productMapper = new ProductMapper($contentMapper);
-$catalogMapper = new CatalogMapper($productMapper);
+$sampleCatalogFilename = "sample-catalog.json";
+$testResourceFolderPath = realpath(__DIR__ . '/tests/resources');
+$adapter = new Local($testResourceFolderPath);
+$filesystem = new Filesystem($adapter);
 
-$filesystem->write("catalog.json", $json);
-$jsonCatalogProvider = new JSONCatalogProvider($filesystem, "catalog.json", $catalogMapper);
+$catalogFactory =  new Wambo\Catalog\CatalogFactory($filesystem, $sampleCatalogFilename);
+$catalog = $catalogFactory->getCatalog();
 
-$catalog = $jsonCatalogProvider->getCatalog();
-
-foreach (
+foreach ($catalog->getProducts() as $product) {
+    /** @var \Wambo\Catalog\Model\Product $product */
+    echo $product->getTitle();
+}
 ```

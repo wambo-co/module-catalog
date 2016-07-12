@@ -9,9 +9,9 @@ use Wambo\Catalog\Mapper\CatalogMapper;
 use Wambo\Catalog\Model\Catalog;
 
 /**
- * Class JSONCatalogProvider reads and writes product and catalog data from and to a JSON file.
+ * Class JSONCatalogProvider reads product and catalog data from an JSON file.
  */
-class JSONCatalogProvider
+class JSONCatalogProvider implements CatalogProviderInterface
 {
     /**
      * @var FilesystemInterface $filesystem The filesystem this Catalog instance works on
@@ -83,11 +83,12 @@ class JSONCatalogProvider
      *
      * @throws JSONException If the given JSON could not be parsed
      */
-    private function parseJSON($json) {
+    private function parseJSON($json)
+    {
         $catalogData = json_decode($json, true);
 
         // handle errors
-        switch(json_last_error()) {
+        switch (json_last_error()) {
 
             case JSON_ERROR_DEPTH:
                 throw new JSONException("The maximum stack depth has been exceeded");
