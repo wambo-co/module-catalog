@@ -14,6 +14,7 @@ use Wambo\Catalog\Validation\SlugValidator;
 
 /**
  * Class JSONCatalogTest tests the JSONCatalog class.
+ *
  * @package Wambo\Catalog\Tests
  */
 class JSONCatalogTest extends \PHPUnit_Framework_TestCase
@@ -118,6 +119,7 @@ JSON;
 
     /**
      * Integration test
+     *
      * @test
      */
     public function getCatalog_IntegrationTest_CatalogWithProductsIsReturned()
@@ -164,10 +166,37 @@ JSON;
     }
 
     /**
-     * Integration test
+     * Integration test: invalid JSON
+     *
+     * @test
+     * @dataProvider                   getInvalidCatalogJSON
+     *
+     * @param string $json
+     *
+     * @expectedException Wambo\Catalog\Error\CatalogException
+     * @expectedExceptionMessageRegExp /Unable to read catalog/
+     */
+    public function getCatalog_IntegrationTest_ValidCatalog_CatalogExceptionIsThrown($json)
+    {
+        // arrange
+        $filesystem = new Filesystem(new MemoryAdapter());
+        $contentMapper = new ContentMapper();
+        $productMapper = new ProductMapper($contentMapper);
+        $catalogMapper = new CatalogMapper($productMapper);
+
+        $filesystem->write("catalog.json", $json);
+        $jsonCatalogProvider = new JSONCatalogProvider($filesystem, "catalog.json", $catalogMapper);
+
+        // act
+        $jsonCatalogProvider->getCatalog();
+    }
+
+    /**
+     * Integration test: valid catalog
+     *
      * @test
      */
-    public function getCatalog_IntegrationTest_AllProductAttributesAreSet()
+    public function getCatalog_IntegrationTest_ValidCatalog_AllProductAttributesAreSet()
     {
         // arrange
         $filesystem = new Filesystem(new MemoryAdapter());
@@ -202,6 +231,73 @@ JSON;
         $this->assertEquals("t-shirt-no-1-slug", $firstProduct->getSlug(), "Wrong slug");
         $this->assertEquals("T-Shirt No. 1", $firstProduct->getTitle(), "Wrong title");
         $this->assertEquals("Our T-Shirt No. 1", $firstProduct->getSummaryText(), "Wrong summary");
-        $this->assertEquals("Our fancy T-Shirt No. 1 is ...", $firstProduct->getProductDescription(), "Wrong description");
+        $this->assertEquals("Our fancy T-Shirt No. 1 is ...", $firstProduct->getProductDescription(),
+            "Wrong description");
+    }
+
+    /**
+     * Get invalid catalog JSON for testing
+     *
+     * @return array
+     */
+    public static function getInvalidCatalogJSON()
+    {
+        return array(
+
+                // JavaScript instead of JSON
+            [
+                <<<JSON
+                var test = {
+    "sku": "t-shirt-no-1",
+    "slug": "t-shirt-no-1-slug",
+    "title": "T-Shirt No. 1",
+    "summary": "Our T-Shirt No. 1",
+    "description": "Our fancy T-Shirt No. 1 is ..."
+};
+JSON
+            ],
+
+                // Missing attribute quotes
+            [<<<JSON
+[
+    {
+        sku: "t-shirt-no-1",
+        slug: "t-shirt-no-1-slug",
+        title: "T-Shirt No. 1",
+        summary: "Our T-Shirt No. 1",
+        description: "Our fancy T-Shirt No. 1 is ..."
+    }
+]
+JSON
+            ],
+
+                // Missing comma
+            [<<<JSON
+[
+    {
+        "sku": "t-shirt-no-1"
+        "slug": "t-shirt-no-1-slug"
+        "title": "T-Shirt No. 1"
+        "summary": "Our T-Shirt No. 1"
+        "description": "Our fancy T-Shirt No. 1 is ..."
+    }
+]
+JSON
+            ],
+
+                // Control Character
+            [<<<JSON
+[
+    {
+        "sku": "t-shirt-no-1"
+        "slug": "t-shirt-no-1-slug"
+        "title": "T-Shirt No. 1"
+        "summary": "Our T-Shirt No. 1"
+        "���": "Our fancy T-Shirt No. 1 is ..."
+    }
+]
+JSON
+            ]
+        );
     }
 }
