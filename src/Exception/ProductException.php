@@ -1,15 +1,15 @@
 <?php
-namespace Wambo\Catalog\Error;
+namespace Wambo\Catalog\Exception;
 
 /**
- * Class SlugException handles Slug-related errors.
+ * Class ProductException handles product-related errors.
  *
  * @package Wambo\Catalog
  */
-class SlugException extends \Exception
+class ProductException extends \Exception
 {
     /**
-     * SlugException constructor.
+     * ProductException constructor.
      *
      * @param string     $message        An error message
      * @param \Exception $innerException The underlying exception (optional)

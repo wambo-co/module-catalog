@@ -41,7 +41,7 @@ class JSONCatalogReaderTest extends \PHPUnit_Framework_TestCase
      * If the filesystem read fails a CatalogException should be thrown
      *
      * @test
-     * @expectedException \Wambo\Catalog\Error\CatalogException
+     * @expectedException \Wambo\Catalog\Exception\CatalogException
      */
     public function getCatalog_FilesystemReadFails_CatalogExceptionIsThrown()
     {
@@ -62,7 +62,7 @@ class JSONCatalogReaderTest extends \PHPUnit_Framework_TestCase
      * If the CatalogMapper returns a catalog, the provider should return that catalog.
      *
      * @test
-     * @expectedException \Wambo\Catalog\Error\CatalogException
+     * @expectedException \Wambo\Catalog\Exception\CatalogException
      */
     public function getCatalog_JSONIsInvalid_CatalogExceptionIsThrown()
     {
@@ -88,7 +88,7 @@ JSON;
      * If the CatalogMapper throws an exception, the provider should throw a CatalogException.
      *
      * @test
-     * @expectedException Wambo\Catalog\Error\CatalogException
+     * @expectedException Wambo\Catalog\Exception\CatalogException
      */
     public function getCatalog_JSONIsValid_MapperThrowsException_CatalogExceptionIsThrown()
     {
@@ -225,7 +225,7 @@ JSON;
      *
      * @param string $json
      *
-     * @expectedException Wambo\Catalog\Error\CatalogException
+     * @expectedException Wambo\Catalog\Exception\CatalogException
      * @expectedExceptionMessageRegExp /Unable to read catalog/
      */
     public function getCatalog_IntegrationTest_ValidCatalog_CatalogExceptionIsThrown($json)

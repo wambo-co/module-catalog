@@ -38,7 +38,7 @@ class ContentTests extends PHPUnit_Framework_TestCase
      *
      * @test
      * @dataProvider                   getContentWithInvalidAttributes
-     * @expectedException Wambo\Catalog\Error\ContentException
+     * @expectedException Wambo\Catalog\Exception\ContentException
      * @expectedExceptionMessageRegExp /The (title|summary text) should not be (shorter|longer) than \d+ characters/
      *
      * @param string $title

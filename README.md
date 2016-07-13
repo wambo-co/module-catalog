@@ -35,7 +35,7 @@ Refactoring the structure of the wambo/catalog module.
     - getProductData: array
     - saveProductData(array)
 - Other todos:
-    - Rename Error to Exception
+    - Rename Error to Exception √
     - Remove Catalog Model
     - Remove the existing CatalogFactory
 

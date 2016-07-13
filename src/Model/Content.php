@@ -1,7 +1,7 @@
 <?php
 namespace Wambo\Catalog\Model;
 
-use Wambo\Catalog\Error\ContentException;
+use Wambo\Catalog\Exception\ContentException;
 
 /**
  * Class Content contains a product title, summary and description text

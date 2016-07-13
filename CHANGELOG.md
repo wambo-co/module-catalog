@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Renamed the Wambo\Catalog\Error namespace to Wambo\Catalog\Exception
+
 ### Fixed
 - Exclude the tests/ folder from Scrutinizer reports
 - Fix coding style and security issues reported by Scrutinizer

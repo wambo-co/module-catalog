@@ -43,7 +43,7 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
      *
      * @test
      *
-     * @expectedException \Wambo\Catalog\Error\ProductException
+     * @expectedException \Wambo\Catalog\Exception\ProductException
      * @expectedExceptionMessageRegExp /The field '\w+' is missing in the given product data/
      * @dataProvider                   getProductDataWithMissingAttribute
      */
@@ -64,7 +64,7 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
      * If the SKU validation fails and exception should be thrown
      *
      * @test
-     * @expectedException Wambo\Catalog\Error\ProductException
+     * @expectedException Wambo\Catalog\Exception\ProductException
      */
     public function getProduct_AllRequiredFieldsPresent_SkuValidationFails_ProductIsReturned()
     {
@@ -90,7 +90,7 @@ class ProductMapperTest extends PHPUnit_Framework_TestCase
      * If the Slug validation fails and exception should be thrown
      *
      * @test
-     * @expectedException Wambo\Catalog\Error\ProductException
+     * @expectedException Wambo\Catalog\Exception\ProductException
      */
     public function getProduct_AllRequiredFieldsPresent_SlugValidationFails_ProductIsReturned()
     {

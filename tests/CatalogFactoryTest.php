@@ -32,7 +32,7 @@ JSON;
 
     /**
      * @test
-     * @expectedException Wambo\Catalog\Error\CatalogException
+     * @expectedException Wambo\Catalog\Exception\CatalogException
      */
     public function getCatalog_IntegrationTest_CatalogJSONIsInvalid_CatalogExceptionIsThrown()
     {

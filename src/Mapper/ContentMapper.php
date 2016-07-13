@@ -1,7 +1,7 @@
 <?php
 namespace Wambo\Catalog\Mapper;
 
-use Wambo\Catalog\Error\ContentException;
+use Wambo\Catalog\Exception\ContentException;
 use Wambo\Catalog\Model\Content;
 
 /**

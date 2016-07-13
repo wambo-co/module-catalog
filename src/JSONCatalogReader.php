@@ -3,8 +3,8 @@
 namespace Wambo\Catalog;
 
 use League\Flysystem\FilesystemInterface;
-use Wambo\Catalog\Error\CatalogException;
-use Wambo\Catalog\Error\JSONException;
+use Wambo\Catalog\Exception\CatalogException;
+use Wambo\Catalog\Exception\JSONException;
 use Wambo\Catalog\Mapper\CatalogMapper;
 use Wambo\Catalog\Model\Catalog;
 

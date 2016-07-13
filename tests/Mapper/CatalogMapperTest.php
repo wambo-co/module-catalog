@@ -36,7 +36,7 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
      * When the product mapper throws an exception the getCatalog function should throw a CatalogException
      *
      * @test
-     * @expectedException Wambo\Catalog\Error\CatalogException
+     * @expectedException Wambo\Catalog\Exception\CatalogException
      */
     public function getCatalog_ArrayOfTwoProductsGiven_ProductMapperThrowsException_CatalogExceptionIsThrown()
     {
@@ -59,11 +59,11 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * If the the given product catalog data contains products with duplicate SKUs a
-     * Wambo\Catalog\Error\CatalogException should be thrown.
+     * Wambo\Catalog\Exception\CatalogException should be thrown.
      *
      * @test
      *
-     * @expectedException Wambo\Catalog\Error\CatalogException
+     * @expectedException Wambo\Catalog\Exception\CatalogException
      * @expectedExceptionMessageRegExp /Cannot add a second product with the SKU '.+'/
      */
     public function getCatalog_ArrayWithDuplicateSKUGiven_CatalogExceptionIsThrown()
@@ -92,11 +92,11 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * If the the given product catalog data contains products with duplicate Slugs a
-     * Wambo\Catalog\Error\CatalogException should be thrown.
+     * Wambo\Catalog\Exception\CatalogException should be thrown.
      *
      * @test
      *
-     * @expectedException Wambo\Catalog\Error\CatalogException
+     * @expectedException Wambo\Catalog\Exception\CatalogException
      * @expectedExceptionMessageRegExp /Cannot add a second product with the Slug 'product-1'/
      */
     public function getCatalog_ArrayWithDuplicateSlugsGiven_CatalogExceptionIsThrown()
@@ -125,11 +125,11 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * If the the given product catalog data contains products with similar SKUs a
-     * Wambo\Catalog\Error\CatalogException should be thrown.
+     * Wambo\Catalog\Exception\CatalogException should be thrown.
      *
      * @test
      *
-     * @expectedException Wambo\Catalog\Error\CatalogException
+     * @expectedException Wambo\Catalog\Exception\CatalogException
      * @expectedExceptionMessageRegExp /Cannot add a second product with the SKU 'product'/
      */
     public function getCatalog_ArrayWithSimilarSKUsGiven_CatalogExceptionIsThrown()
@@ -157,11 +157,11 @@ class CatalogMapperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * If the the given product catalog data contains products with similar slugs a
-     * Wambo\Catalog\Error\CatalogException should be thrown.
+     * Wambo\Catalog\Exception\CatalogException should be thrown.
      *
      * @test
      *
-     * @expectedException Wambo\Catalog\Error\CatalogException
+     * @expectedException Wambo\Catalog\Exception\CatalogException
      * @expectedExceptionMessageRegExp /Cannot add a second product with the Slug 'a-product'/
      */
     public function getCatalog_ArrayWithSimilarSlugsGiven_CatalogExceptionIsThrown()
