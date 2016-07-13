@@ -6,7 +6,7 @@ use Wambo\Catalog\Model\Catalog;
 /**
  * Class JSONCatalogProvider returns product and catalog data.
  */
-interface CatalogProviderInterface
+interface CatalogReaderInterface
 {
     /**
      * Get the product catalog.

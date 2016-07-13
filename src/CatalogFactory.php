@@ -16,7 +16,7 @@ use Wambo\Catalog\Model\Catalog;
  */
 class CatalogFactory
 {
-    /** @var CatalogProviderInterface $catalogProvider */
+    /** @var CatalogReaderInterface $catalogProvider */
     private $catalogProvider;
 
     /**
@@ -31,7 +31,7 @@ class CatalogFactory
         $productMapper = new ProductMapper($contentMapper);
         $catalogMapper = new CatalogMapper($productMapper);
 
-        $this->catalogProvider = new JSONCatalogProvider($filesystem, $jsonCatalogFilePath, $catalogMapper);
+        $this->catalogProvider = new JSONCatalogReader($filesystem, $jsonCatalogFilePath, $catalogMapper);
     }
 
     /**

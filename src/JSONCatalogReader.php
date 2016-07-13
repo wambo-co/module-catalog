@@ -9,9 +9,9 @@ use Wambo\Catalog\Mapper\CatalogMapper;
 use Wambo\Catalog\Model\Catalog;
 
 /**
- * Class JSONCatalogProvider reads product and catalog data from an JSON file.
+ * Class JSONCatalogReader reads product and catalog data from an JSON file.
  */
-class JSONCatalogProvider implements CatalogProviderInterface
+class JSONCatalogReader implements CatalogReaderInterface
 {
     /**
      * @var FilesystemInterface $filesystem The filesystem this Catalog instance works on
@@ -29,7 +29,7 @@ class JSONCatalogProvider implements CatalogProviderInterface
     private $catalogMapper;
 
     /**
-     * Creates a new instance of the JSONCatalogProvider class.
+     * Creates a new instance of the JSONCatalogReader class.
      *
      * @param FilesystemInterface $filesystem      The filesystem this Catalog instance works on
      * @param string              $catalogFilePath The path to the JSON file containing the catalog in the given
