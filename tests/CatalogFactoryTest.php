@@ -2,7 +2,6 @@
 use League\Flysystem\Filesystem;
 use League\Flysystem\Memory\MemoryAdapter;
 use Wambo\Catalog\CatalogFactory;
-use Wambo\Catalog\Error\CatalogException;
 
 /**
  * Class CatalogFactoryTest tests the Wambo\Catalog\CatalogFactory class.
