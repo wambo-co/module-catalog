@@ -1,15 +1,16 @@
 <?php
+
 namespace Wambo\Catalog\Exception;
 
 /**
- * Class CatalogException handles catalog-related errors.
+ * Class ProductException handles ProductRepository-related errors.
  *
  * @package Wambo\Catalog
  */
-class CatalogException extends \Exception
+class RepositoryException extends \Exception
 {
     /**
-     * CatalogException constructor.
+     * RepositoryException constructor.
      *
      * @param string     $message        An error message
      * @param \Exception $innerException The underlying exception (optional)

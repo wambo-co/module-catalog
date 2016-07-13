@@ -3,7 +3,7 @@
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Memory\MemoryAdapter;
-use Wambo\Catalog\JSONCatalogReader;
+use Wambo\Catalog\Storage\JSONProductStorage;
 use Wambo\Catalog\Mapper\CatalogMapper;
 use Wambo\Catalog\Mapper\ContentMapper;
 use Wambo\Catalog\Mapper\ProductMapper;
@@ -11,11 +11,11 @@ use Wambo\Catalog\Model\Catalog;
 use Wambo\Catalog\Model\Product;
 
 /**
- * Class JSONCatalogReaderTest tests the Wambo\Catalog\JSONCatalogReader class.
+ * Class JSONProductStorageTest tests the Wambo\Catalog\Storage\JSONProductStorage class.
  *
  * @package Wambo\Catalog\Tests
  */
-class JSONCatalogReaderTest extends \PHPUnit_Framework_TestCase
+class JSONProductStorageTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * If the JSONCatalog is empty no products should be returned.
@@ -28,7 +28,7 @@ class JSONCatalogReaderTest extends \PHPUnit_Framework_TestCase
         $filesystem = new Filesystem(new MemoryAdapter());
         $catalogMapperMock = $this->getMockBuilder(CatalogMapper::class)->disableOriginalConstructor()->getMock();
         /** @var $catalogMapperMock CatalogMapper A mock for the CatalogMapper class */
-        $jsonCatalog = new JSONCatalogReader($filesystem, "catalog.json", $catalogMapperMock);
+        $jsonCatalog = new JSONProductStorage($filesystem, "catalog.json", $catalogMapperMock);
 
         // act
         $catalog = $jsonCatalog->getCatalog();
@@ -52,7 +52,7 @@ class JSONCatalogReaderTest extends \PHPUnit_Framework_TestCase
         $catalogMapperMock = $this->getMockBuilder(CatalogMapper::class)->disableOriginalConstructor()->getMock();
         /** @var Filesystem $filesystemMock */
         /** @var CatalogMapper $catalogMapperMock A mock for the CatalogMapper class */
-        $jsonCatalog = new JSONCatalogReader($filesystemMock, "catalog.json", $catalogMapperMock);
+        $jsonCatalog = new JSONProductStorage($filesystemMock, "catalog.json", $catalogMapperMock);
 
         // act
         $jsonCatalog->getCatalog();
@@ -78,7 +78,7 @@ class JSONCatalogReaderTest extends \PHPUnit_Framework_TestCase
 ]
 JSON;
         $filesystem->write("catalog.json", $catalogJSON);
-        $jsonCatalogProvider = new JSONCatalogReader($filesystem, "catalog.json", $catalogMapperMock);
+        $jsonCatalogProvider = new JSONProductStorage($filesystem, "catalog.json", $catalogMapperMock);
 
         // act
         $jsonCatalogProvider->getCatalog();
@@ -102,7 +102,7 @@ JSON;
 []
 JSON;
         $filesystem->write("catalog.json", $catalogJSON);
-        $jsonCatalogProvider = new JSONCatalogReader($filesystem, "catalog.json", $catalogMapperMock);
+        $jsonCatalogProvider = new JSONProductStorage($filesystem, "catalog.json", $catalogMapperMock);
 
         // act
         $jsonCatalogProvider->getCatalog();
@@ -127,7 +127,7 @@ JSON;
 ]
 JSON;
         $filesystem->write("catalog.json", $catalogJSON);
-        $jsonCatalogProvider = new JSONCatalogReader($filesystem, "catalog.json", $catalogMapperMock);
+        $jsonCatalogProvider = new JSONProductStorage($filesystem, "catalog.json", $catalogMapperMock);
 
         // act
         $catalog = $jsonCatalogProvider->getCatalog();
@@ -153,7 +153,7 @@ JSON;
         $productMapper = new ProductMapper($contentMapper);
         $catalogMapper = new CatalogMapper($productMapper);
 
-        $jsonCatalogProvider = new JSONCatalogReader($filesystem, $sampleCatalogFilename, $catalogMapper);
+        $jsonCatalogProvider = new JSONProductStorage($filesystem, $sampleCatalogFilename, $catalogMapper);
 
         // act
         $catalog = $jsonCatalogProvider->getCatalog();
@@ -208,7 +208,7 @@ JSON;
 ]
 JSON;
         $filesystem->write("catalog.json", $catalogJSON);
-        $jsonCatalogProvider = new JSONCatalogReader($filesystem, "catalog.json", $catalogMapper);
+        $jsonCatalogProvider = new JSONProductStorage($filesystem, "catalog.json", $catalogMapper);
 
         // act
         $catalog = $jsonCatalogProvider->getCatalog();
@@ -237,7 +237,7 @@ JSON;
         $catalogMapper = new CatalogMapper($productMapper);
 
         $filesystem->write("catalog.json", $json);
-        $jsonCatalogProvider = new JSONCatalogReader($filesystem, "catalog.json", $catalogMapper);
+        $jsonCatalogProvider = new JSONProductStorage($filesystem, "catalog.json", $catalogMapper);
 
         // act
         $jsonCatalogProvider->getCatalog();
@@ -268,7 +268,7 @@ JSON;
 ]
 JSON;
         $filesystem->write("catalog.json", $catalogJSON);
-        $jsonCatalogProvider = new JSONCatalogReader($filesystem, "catalog.json", $catalogMapper);
+        $jsonCatalogProvider = new JSONProductStorage($filesystem, "catalog.json", $catalogMapper);
 
         // act
         $catalog = $jsonCatalogProvider->getCatalog();

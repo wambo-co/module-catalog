@@ -23,7 +23,7 @@ Refactoring the structure of the wambo/catalog module.
 - JSONEncoder (Core): Converts arrays to JSON
     - getJSON(array): string
 - CachedProductRepository(Cache, ProductRepository) implements ProductRepositoryInterface: Adds a cache layer to the ProductRepository
-- ProductRepository(ProductGateway): Fetches Products from the ProductGateway and writes Products back to the ProductGateway
+- ProductRepository(ProductMapper): Fetches Products from the Storage and writes Products back to the Storage √
     - getProducts: Product[]
     - getById(string: id)
     - add(Product)
@@ -31,9 +31,9 @@ Refactoring the structure of the wambo/catalog module.
 - ProductMapper: Maps Product models from unstructured data and vice versa
      - getProduct(array): Product
      - getData(Product): array
-- ProductStorage: Reads and writes unstructured data
-    - getProductData: array
-    - saveProductData(array)
+- JSONStorage implements StorageInterface (Core): Reads and writes unstructured data
+    - readData: array
+    - writeData(array)
 - Other todos:
     - Rename Error to Exception √
     - Remove Catalog Model
