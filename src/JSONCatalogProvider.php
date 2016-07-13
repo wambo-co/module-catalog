@@ -54,13 +54,19 @@ class JSONCatalogProvider implements CatalogProviderInterface
      */
     public function getCatalog()
     {
-        if ($this->filesystem->has($this->catalogFilePath) == false) {
-            return array();
+        if ($this->filesystem->has($this->catalogFilePath) === false) {
+            return new Catalog([]);
         }
 
         try {
 
             $json = $this->filesystem->read($this->catalogFilePath);
+
+            // handle read errors
+            if ($json === false) {
+               throw new CatalogException(sprintf("Failed to read %s", $this->catalogFilePath));
+            }
+
             $catalogData = $this->parseJSON($json);
 
             // convert the catalog data into a Catalog model

@@ -10,14 +10,14 @@ namespace Wambo\Catalog\Model;
 class Catalog implements \Countable
 {
     /**
-     * @var array
+     * @var Product[]
      */
     private $products;
 
     /**
      * Creates a new Catalog instance from the given Product models
      *
-     * @param array $products A list of Product models
+     * @param Product[] $products A list of Product models
      */
     public function __construct(array $products)
     {
@@ -27,7 +27,7 @@ class Catalog implements \Countable
     /**
      * Get a list of all Product models in this catalog
      *
-     * @return array
+     * @return Product[]
      */
     public function getProducts()
     {

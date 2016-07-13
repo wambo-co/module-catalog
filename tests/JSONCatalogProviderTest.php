@@ -38,6 +38,27 @@ class JSONCatalogTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * If the filesystem read fails a CatalogException should be thrown
+     *
+     * @test
+     * @expectedException \Wambo\Catalog\Error\CatalogException
+     */
+    public function getCatalog_FilesystemReadFails_CatalogExceptionIsThrown()
+    {
+        // arrange
+        $filesystemMock = $this->getMockBuilder(Filesystem::class)->disableOriginalConstructor()->getMock();
+        $filesystemMock->method("read")->willReturn(false);
+
+        $catalogMapperMock = $this->getMockBuilder(CatalogMapper::class)->disableOriginalConstructor()->getMock();
+        /** @var Filesystem $filesystemMock */
+        /** @var CatalogMapper $catalogMapperMock A mock for the CatalogMapper class */
+        $jsonCatalog = new JSONCatalogProvider($filesystemMock, "catalog.json", $catalogMapperMock);
+
+        // act
+        $jsonCatalog->getCatalog();
+    }
+
+    /**
      * If the CatalogMapper returns a catalog, the provider should return that catalog.
      *
      * @test
