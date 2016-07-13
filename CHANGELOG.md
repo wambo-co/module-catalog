@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Renamed the Wambo\Catalog\Error namespace to Wambo\Catalog\Exception
+- Replace the CatalogProvider with a ProductRepository
+- Remove the Catalog Model
 
 ### Fixed
 - Exclude the tests/ folder from Scrutinizer reports
