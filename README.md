@@ -28,10 +28,10 @@ Refactoring the structure of the wambo/catalog module.
     - getById(string: id)
     - add(Product)
     - remove(Product)
-- ProductMapper: Maps Product models from unstructured data and vice versa
+- ProductMapper: Maps Product models from unstructured data and vice versa √
      - getProduct(array): Product
      - getData(Product): array
-- JSONStorage implements StorageInterface (Core): Reads and writes unstructured data
+- JSONStorage implements StorageInterface (Core): Reads and writes unstructured data √
     - readData: array
     - writeData(array)
 - Other todos:

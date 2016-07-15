@@ -12,7 +12,7 @@ use Wambo\Core\Storage\StorageInterface;
  *
  * @package Wambo\Catalog
  */
-class ProductRepository
+class ProductRepository implements ProductRepositoryInteface
 {
     /**
      * @var StorageInterface
@@ -24,7 +24,7 @@ class ProductRepository
     private $productMapper;
 
     /**
-     * ProductRepository constructor.
+     * Creates a new ProductRepository instance.
      *
      * @param StorageInterface $productStorage A product storage for reading and writing product data
      * @param ProductMapper    $productMapper  A product mapper for mapping unstructured data to Product models and
