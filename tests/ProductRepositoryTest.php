@@ -85,6 +85,6 @@ class ProductRepositoryTest extends PHPUnit_Framework_TestCase
 
         /** @var Product $product */
         $product = $products[0];
-        $this->assertEqual("product-a", $product->getSKU());
+        $this->assertEquals("product-a", $product->getSKU());
     }
 }
