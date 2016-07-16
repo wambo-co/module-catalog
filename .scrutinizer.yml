@@ -1,0 +1,20 @@
+build:
+    environment:
+        php: '7.0.6'
+    tests:
+        override:
+            -
+                command: 'phpunit --coverage-clover=coverage.xml'
+                coverage:
+                    file: 'coverage.xml'
+                    format: 'php-clover'
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
+filter:
+    paths: ["src/*"]
+    excluded_paths:
+        - "tests/"
