@@ -2,6 +2,7 @@
   "name": "wambo/module-catalog",
   "description": "A product catalog for Wambo",
   "type": "wambo-module",
+  "license": "Apache-2.0",
   "authors": [
     {
       "name": "Rene Penner",
@@ -16,8 +17,14 @@
   ],
   "autoload": {
     "psr-4": {
-      "Wambo\\Test\\": "src"
+      "Wambo\\Catalog\\": "src"
     }
   },
-  "require": { }
+  "require": {
+    "league/flysystem": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.4",
+    "league/flysystem-memory": "^1.0"
+  }
 }
