@@ -12,7 +12,7 @@ use Wambo\Core\Storage\StorageInterface;
  *
  * @package Wambo\Catalog
  */
-class ProductRepository implements ProductRepositoryInteface
+class ProductRepository implements ProductRepositoryInterface
 {
     /**
      * @var StorageInterface

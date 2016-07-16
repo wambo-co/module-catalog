@@ -12,7 +12,7 @@ use Wambo\Catalog\Model\Product;
  *
  * @package Wambo\Catalog
  */
-class CachedProductRepository implements ProductRepositoryInteface
+class CachedProductRepository implements ProductRepositoryInterface
 {
     /**
      * @var CacheItemPoolInterface

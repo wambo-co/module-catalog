@@ -12,11 +12,11 @@ use Wambo\Catalog\Model\Product;
 
 
 /**
- * The ProductRepositoryInteface interface provides function for reading and writing Products from and to a storage.
+ * The ProductRepositoryInterface interface provides function for reading and writing Products from and to a storage.
  *
  * @package Wambo\Catalog
  */
-interface ProductRepositoryInteface
+interface ProductRepositoryInterface
 {
     /**
      * Get all products
