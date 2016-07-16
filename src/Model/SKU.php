@@ -2,7 +2,7 @@
 
 namespace Wambo\Catalog\Model;
 
-use Wambo\Catalog\Error\SKUException;
+use Wambo\Catalog\Exception\SKUException;
 
 /**
  * Class SKU represents an unique identifier (stock keeping unit) for a product (e.g. "fancy-short-1")

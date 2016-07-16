@@ -1,7 +1,7 @@
 <?php
 namespace Wambo\Catalog\Model;
 
-use Wambo\Catalog\Error\ContentException;
+use Wambo\Catalog\Exception\ContentException;
 
 /**
  * Class Content contains a product title, summary and description text
@@ -34,40 +34,40 @@ class Content
      *
      * @param string $title              A product title (e.g. "Fancy T-Shirt No. 1")
      * @param string $summaryText        A short description text of a product (e.g. "The first edition of our fancy
-     *                                   T-Shirt with a unicorn pooping ice cream on the front"; optional)
+     *                                   T-Shirt with a unicorn pooping ice cream on the front")
      * @param string $productDescription A full product description text (optional)
      *
      * @throws ContentException If the summary text is too long
      */
-    public function __construct(string $title, string $summaryText = "", string $productDescription = "")
+    public function __construct(string $title, string $summaryText, string $productDescription = "")
     {
         // validate the title
-        $title = trim($title);
-        if (strlen($title) < self::TITLE_MIN_LENGTH) {
+        $trimmedTitle = trim($title);
+        if (strlen($trimmedTitle) < self::TITLE_MIN_LENGTH) {
             throw new ContentException(sprintf("The title should not be shorter than %s characters",
                 self::TITLE_MIN_LENGTH));
         }
 
-        if (strlen($title) > self::TITLE_MAX_LENGTH) {
+        if (strlen($trimmedTitle) > self::TITLE_MAX_LENGTH) {
             throw new ContentException(sprintf("The title should not be longer than %s characters",
                 self::TITLE_MAX_LENGTH));
         }
 
         // validate the summary
-        $summaryText = trim($summaryText);
+        $trimmedSummary = trim($summaryText);
 
-        if (strlen($summaryText) < self::SUMMARY_MIN_LENGTH) {
+        if (strlen($trimmedSummary) < self::SUMMARY_MIN_LENGTH) {
             throw new ContentException(sprintf("The summary text should not be shorter than %s characters",
                 self::SUMMARY_MIN_LENGTH));
         }
 
-        if (strlen($summaryText) > self::SUMMARY_MAX_LENGTH) {
+        if (strlen($trimmedSummary) > self::SUMMARY_MAX_LENGTH) {
             throw new ContentException(sprintf("The summary text should not be longer than %s characters",
                 self::SUMMARY_MAX_LENGTH));
         }
 
-        $this->title = $title;
-        $this->summaryText = $summaryText;
+        $this->title = $trimmedTitle;
+        $this->summaryText = $trimmedSummary;
         $this->productDescription = $productDescription;
     }
 

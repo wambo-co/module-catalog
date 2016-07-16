@@ -2,7 +2,7 @@
 
 namespace Wambo\Catalog\Model;
 
-use Wambo\Catalog\Error\SlugException;
+use Wambo\Catalog\Exception\SlugException;
 
 /**
  * Class Slug represents a human-readable, descriptive URL fragment for the product (e.g.

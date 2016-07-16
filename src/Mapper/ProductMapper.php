@@ -1,7 +1,7 @@
 <?php
 namespace Wambo\Catalog\Mapper;
 
-use Wambo\Catalog\Error\ProductException;
+use Wambo\Catalog\Exception\ProductException;
 use Wambo\Catalog\Model\Product;
 use Wambo\Catalog\Model\SKU;
 use Wambo\Catalog\Model\Slug;

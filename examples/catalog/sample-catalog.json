@@ -1,0 +1,23 @@
+[
+  {
+    "sku": "t-shirt-no-1",
+    "slug": "t-shirt-no-1",
+    "title": "T-Shirt No. 1",
+    "summary": "Our T-Shirt No. 1",
+    "description": "Our fancy T-Shirt No. 1 is ..."
+  },
+  {
+    "sku": "t-shirt-no-2",
+    "slug": "t-shirt-no-2",
+    "title": "T-Shirt No. 2",
+    "summary": "Our T-Shirt No. 2",
+    "description": "Our fancy T-Shirt No. 2 is ..."
+  },
+  {
+    "sku": "t-shirt-no-3",
+    "slug": "t-shirt-no-3",
+    "title": "T-Shirt No. 3",
+    "summary": "Our T-Shirt No. 3",
+    "description": "Our fancy T-Shirt No. 3 is ..."
+  }
+]

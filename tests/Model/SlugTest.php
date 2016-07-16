@@ -42,7 +42,6 @@ class SlugTest extends PHPUnit_Framework_TestCase
     public function validateSlug_invalidSlugs_ExceptionIsThrown($sku, $expectedExceptionMessage)
     {
         // act
-        $exceptionThrown = false;
         try {
 
             new Slug($sku);

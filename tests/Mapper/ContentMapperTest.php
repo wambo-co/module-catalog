@@ -35,7 +35,7 @@ class ContentMapperTest extends PHPUnit_Framework_TestCase
      *
      * @test
      * @dataProvider                   getContentDataWithMissingAttributes
-     * @expectedException Wambo\Catalog\Error\ContentException
+     * @expectedException Wambo\Catalog\Exception\ContentException
      * @expectedExceptionMessageRegExp /The field '.+' is missing in the given content data/
      *
      * @param array $contentData Product content data
@@ -54,7 +54,7 @@ class ContentMapperTest extends PHPUnit_Framework_TestCase
      *
      * @test
      * @dataProvider                   getContentWithInvalidAttributes
-     * @expectedException Wambo\Catalog\Error\ContentException
+     * @expectedException Wambo\Catalog\Exception\ContentException
      * @expectedExceptionMessageRegExp /Failed to create a content model from the given data/
      *
      * @param array $contentData Product content data
