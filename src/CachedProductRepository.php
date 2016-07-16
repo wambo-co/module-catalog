@@ -2,7 +2,7 @@
 
 namespace Wambo\Catalog;
 
-use Wambo\Catalog\Cache\CacheInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Wambo\Catalog\Exception\RepositoryException;
 use Wambo\Catalog\Model\Product;
 
@@ -15,7 +15,7 @@ use Wambo\Catalog\Model\Product;
 class CachedProductRepository implements ProductRepositoryInteface
 {
     /**
-     * @var CacheInterface
+     * @var CacheItemPoolInterface
      */
     private $cache;
     /**
@@ -26,11 +26,11 @@ class CachedProductRepository implements ProductRepositoryInteface
     /**
      * Creates a new CachedProductRepository instance.
      *
-     * @param CacheInterface    $cache
-     * @param ProductRepository $productRepository
+     * @param CacheItemPoolInterface $cache             A cache backend for storing the results
+     * @param ProductRepository      $productRepository A product repository for reading and writing product data
      *
      */
-    public function __construct(CacheInterface $cache, ProductRepository $productRepository)
+    public function __construct(CacheItemPoolInterface $cache, ProductRepository $productRepository)
     {
         $this->cache = $cache;
         $this->productRepository = $productRepository;
@@ -45,13 +45,20 @@ class CachedProductRepository implements ProductRepositoryInteface
      */
     public function getProducts()
     {
-        $cacheKey = $this->cache->getKey(self::class, "products");
-        if ($this->cache->has($cacheKey)) {
-            return $this->cache->get($cacheKey);
+        $cacheKey = "products";
+        if ($this->cache->hasItem($cacheKey)) {
+
+            // return from cache
+            $cacheItem = $this->cache->getItem($cacheKey);
+            $cachedProducts = $cacheItem->get();
+            return $cachedProducts;
         }
 
         $products = $this->productRepository->getProducts();
-        $this->cache->store($cacheKey, $products);
+
+        // save to cache
+        $cacheItem = $this->cache->getItem($cacheKey);
+        $cacheItem->set($products);
 
         return $products;
     }

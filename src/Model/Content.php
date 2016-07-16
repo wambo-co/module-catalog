@@ -34,12 +34,12 @@ class Content
      *
      * @param string $title              A product title (e.g. "Fancy T-Shirt No. 1")
      * @param string $summaryText        A short description text of a product (e.g. "The first edition of our fancy
-     *                                   T-Shirt with a unicorn pooping ice cream on the front"; optional)
+     *                                   T-Shirt with a unicorn pooping ice cream on the front")
      * @param string $productDescription A full product description text (optional)
      *
      * @throws ContentException If the summary text is too long
      */
-    public function __construct(string $title, string $summaryText = "", string $productDescription = "")
+    public function __construct(string $title, string $summaryText, string $productDescription = "")
     {
         // validate the title
         $trimmedTitle = trim($title);

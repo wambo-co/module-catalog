@@ -12,12 +12,7 @@ see: [sample-catalog.json](tests/resources/sample-catalog.json)
 
 Refactoring the structure of the wambo/catalog module.
 
-- Cache (Core): A simple JSON cache that writes objects from and to disc
-    - Key/Value
-    - Filesystem
-    - JSON
-- ProductCache (Catalog) implements CacheInterface
-    - JSON serialization of Product Models
+- Cache (psr/cache + tedivm/stash) √
 - JSONDecoder (Core): Converts JSON to arrays
     - getData(string: json): array
 - JSONEncoder (Core): Converts arrays to JSON
