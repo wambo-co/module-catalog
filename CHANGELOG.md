@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Replace the CatalogProvider with a ProductRepository
 - Remove the Catalog Model
 - Change package type from "wambo-module" to "library"
+- Set module-core to bigger then v0.1.0 in composer.json
+- Remove Catalog dummy class because ii is not longe required 
 
 ### Fixed
 - Exclude the tests/ folder from Scrutinizer reports
