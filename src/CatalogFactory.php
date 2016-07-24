@@ -3,7 +3,7 @@
 namespace Wambo\Catalog;
 
 use League\Flysystem\FilesystemInterface;
-use Wambo\Catalog\Error\CatalogException;
+use Wambo\Catalog\Exception\CatalogException;
 use Wambo\Catalog\Mapper\CatalogMapper;
 use Wambo\Catalog\Mapper\ContentMapper;
 use Wambo\Catalog\Mapper\ProductMapper;

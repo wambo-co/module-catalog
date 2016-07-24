@@ -1,7 +1,7 @@
 <?php
 namespace Wambo\Catalog\Mapper;
 
-use Wambo\Catalog\Error\CatalogException;
+use Wambo\Catalog\Exception\CatalogException;
 use Wambo\Catalog\Model\Catalog;
 
 /**

@@ -1,5 +1,5 @@
 <?php
-namespace Wambo\Catalog\Error;
+namespace Wambo\Catalog\Exception;
 
 /**
  * Class JSONException handles JSON-related errors.
