@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Set module-core to bigger then v0.1.0 in composer.json
 - Remove Catalog dummy class because ii is not longe required
 - Set wambo core version to "*" and minimum-stability to "dev" to support feature branches
+- Use the JSONDecoder from wambo/module-core
 
 ### Fixed
 - Exclude the tests/ folder from Scrutinizer reports

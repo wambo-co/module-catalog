@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: andyk
- * Date: 14/07/16
- * Time: 21:34
- */
 namespace Wambo\Catalog;
 
 use Wambo\Catalog\Exception\RepositoryException;
 use Wambo\Catalog\Model\Product;
-
 
 /**
  * The ProductRepositoryInterface interface provides function for reading and writing Products from and to a storage.
