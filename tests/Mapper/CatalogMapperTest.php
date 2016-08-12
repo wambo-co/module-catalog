@@ -4,7 +4,7 @@ use Wambo\Catalog\Mapper\CatalogMapper;
 use Wambo\Catalog\Mapper\ProductMapper;
 use Wambo\Catalog\Model\Content;
 use Wambo\Catalog\Model\Product;
-use Wambo\Catalog\Model\SKU;
+use Wambo\Core\Model\SKU;
 use Wambo\Catalog\Model\Slug;
 
 /**

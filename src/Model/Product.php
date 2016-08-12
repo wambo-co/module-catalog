@@ -2,6 +2,8 @@
 
 namespace Wambo\Catalog\Model;
 
+use Wambo\Core\Model\SKU;
+
 /**
  * Class Product represents a single catalog item or product.
  *

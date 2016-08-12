@@ -3,8 +3,8 @@ namespace Wambo\Catalog\Mapper;
 
 use Wambo\Catalog\Exception\ProductException;
 use Wambo\Catalog\Model\Product;
-use Wambo\Catalog\Model\SKU;
 use Wambo\Catalog\Model\Slug;
+use Wambo\Core\Model\SKU;
 
 /**
  * Class ProductMapper creates \Wambo\Model\Product models from data bags with product data.
